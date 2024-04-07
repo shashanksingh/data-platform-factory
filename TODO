@@ -1,0 +1,4 @@
+1. infra - terraform
+2. unit test
+3. pyspark or some compute?
+4. centralized connection ? /( airflow connection)

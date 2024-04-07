@@ -1,0 +1,10 @@
+def load_task(**kwargs):
+    destination = kwargs['params']['destination']
+    print(f"Loading data into {destination}")
+
+load_task = PythonOperator(
+    task_id='load_task',
+    python_callable=load_task,
+    op_kwargs={'params': {'destination': '{destination}'}},
+    dag=dag
+)
