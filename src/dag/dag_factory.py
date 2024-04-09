@@ -1,10 +1,12 @@
+from dag_description import DAGDescription
+
+import toml
+
 from ..extract.extract import Extract
 from ..load.load import Load
-from ..transform.transform import Transform
 from ..report.report import Report
+from ..transform.transform import Transform
 from ..wait.wait import Wait
-from dag_description import DAGDescription
-import toml
 
 
 class DAGFactory:
@@ -37,13 +39,15 @@ class DAGFactory:
     @staticmethod
     def read_etl_description(file_path: str) -> DAGDescription:
         factory = DAGFactory()
-        with open(file_path, 'r') as file:
+        with open(file_path, "r") as file:
             data = toml.load(file)
 
-        extract = factory.create_extract(data.get('Extract', {}))
-        transforms = factory.create_transform(data.get('Transform', []))
-        load = factory.create_load(data.get('Load', {}))
-        report = factory.create_report(data.get('Report',{}))
-        wait = factory.create_wait(data.get('Wait', {}))
+        extract = factory.create_extract(data.get("Extract", {}))
+        transforms = factory.create_transform(data.get("Transform", []))
+        load = factory.create_load(data.get("Load", {}))
+        report = factory.create_report(data.get("Report", {}))
+        wait = factory.create_wait(data.get("Wait", {}))
 
-        return DAGDescription(extract=extract, transforms=transforms, load=load, report=report, wait=wait)
+        return DAGDescription(
+            extract=extract, transforms=transforms, load=load, report=report, wait=wait
+        )
