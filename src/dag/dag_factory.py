@@ -20,8 +20,8 @@ class DAGFactory:
         return Load(**config)
 
     @staticmethod
-    def create_transform(configs: list) -> list:
-        transforms: List[str] = []
+    def create_transform(configs: list) -> Transform:
+        transforms: Transform = Transform()
         # for transform_config in configs:
         #     if "dedup" in transform_config:
         #         transforms.append(DedupTransform())
@@ -45,10 +45,10 @@ class DAGFactory:
 
         extract = factory.create_extract(data.get("Extract", {}))
         # TODO fix transforms
-        transforms = factory.create_transform(data.get("Transform"))
-        load = factory.create_load(data.get("Load", {}))
-        report = factory.create_report(data.get("Report"))
-        wait = factory.create_wait(data.get("Wait"))
+        transforms: Transform = factory.create_transform(data.get("Transform"))
+        load: Load = factory.create_load(data.get("Load", {}))
+        report: Report = factory.create_report(data.get("Report"))
+        wait: Wait = factory.create_wait(data.get("Wait"))
 
         return DAGDescription(
             extract=extract, transforms=None, load=load, report=report, wait=wait
