@@ -1,12 +1,12 @@
-from dag_description import DAGDescription
+from src.dag.dag_description import DAGDescription
 
 import toml
 
-from ..extract.extract import Extract
-from ..load.load import Load
-from ..report.report import Report
-from ..transform.transform import Transform
-from ..wait.wait import Wait
+from src.extract.extract import Extract
+from src.load.load import Load
+from src.report.report import Report
+from src.transform.transform import Transform
+from src.wait.wait import Wait
 
 
 class DAGFactory:
@@ -30,11 +30,11 @@ class DAGFactory:
 
     @staticmethod
     def create_report(configs: list) -> Report:
-        pass
+        return Report()
 
     @staticmethod
     def create_wait(configs: list) -> Wait:
-        pass
+        return Wait()
 
     @staticmethod
     def read_etl_description(file_path: str) -> DAGDescription:

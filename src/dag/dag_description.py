@@ -2,11 +2,11 @@ from typing import List
 
 from pydantic import BaseModel, Field
 
-from ..extract.extract import Extract
-from ..load.load import Load
-from ..report.report import Report
-from ..transform.transform import Transform
-from ..wait.wait import Wait
+from src.extract.extract import Extract
+from src.load.load import Load
+from src.report.report import Report
+from src.transform.transform import Transform
+from src.wait.wait import Wait
 
 
 class DAGDescription(BaseModel):
