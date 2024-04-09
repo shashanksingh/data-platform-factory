@@ -1,7 +1,8 @@
+from typing import List
+
 from src.dag.dag_description import DAGDescription
 
 import toml
-
 from src.extract.extract import Extract
 from src.load.load import Load
 from src.report.report import Report
@@ -20,7 +21,7 @@ class DAGFactory:
 
     @staticmethod
     def create_transform(configs: list) -> list:
-        transforms = []
+        transforms: List[str] = []
         # for transform_config in configs:
         #     if "dedup" in transform_config:
         #         transforms.append(DedupTransform())
@@ -40,14 +41,15 @@ class DAGFactory:
     def read_etl_description(file_path: str) -> DAGDescription:
         factory = DAGFactory()
         with open(file_path, "r") as file:
-            data = toml.load(file)
+            data = toml.loads(file.read())
 
         extract = factory.create_extract(data.get("Extract", {}))
-        transforms = factory.create_transform(data.get("Transform", []))
+        # TODO fix transforms
+        transforms = factory.create_transform(data.get("Transform"))
         load = factory.create_load(data.get("Load", {}))
-        report = factory.create_report(data.get("Report", {}))
-        wait = factory.create_wait(data.get("Wait", {}))
+        report = factory.create_report(data.get("Report"))
+        wait = factory.create_wait(data.get("Wait"))
 
         return DAGDescription(
-            extract=extract, transforms=transforms, load=load, report=report, wait=wait
+            extract=extract, transforms=None, load=load, report=report, wait=wait
         )

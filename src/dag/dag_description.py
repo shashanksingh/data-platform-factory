@@ -1,7 +1,5 @@
-from typing import List
-
+from typing import Optional
 from pydantic import BaseModel, Field
-
 from src.extract.extract import Extract
 from src.load.load import Load
 from src.report.report import Report
@@ -11,7 +9,7 @@ from src.wait.wait import Wait
 
 class DAGDescription(BaseModel):
     extract: Extract
-    transforms: List[Transform]
+    transforms: Optional[Transform] = None
     load: Load
-    report: List[Report]
+    report: Optional[Report] = None
     wait: Wait

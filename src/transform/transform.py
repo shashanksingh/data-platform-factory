@@ -1,5 +1,7 @@
+from typing import Optional
+
 from pydantic import BaseModel, Field
 
 
 class Transform(BaseModel):
-    source: str
+    source: Optional[str] = None

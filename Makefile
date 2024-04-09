@@ -13,12 +13,12 @@ dev-install:
 	python3 -m pip install -r src/requirements.dev.txt
 
 unittest:
-	python3 -m pytest test
+	python3 -m pytest test -s
 
 
 
 #toml_sort:
-#	python3 -m toml-sort toml/*.toml --all --in-place
+#	python3 -m definiations-sort definiations/*.definiations --all --in-place
 
 isort:
 	python3 -m  isort .

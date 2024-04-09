@@ -6,8 +6,10 @@ from src.dag.dag_factory import DAGFactory
 
 def test_dag_factory():
     mock_file_content = """
-        [{"name": "Earth","surfaceTemperature": 288},
-        {"name": "Mars", "surfaceTemperature": 260}]
+            [Extract]
+            source="postgres"
+            [Load]
+            destination="redshift"
         """
     with unittest.mock.patch(
         "builtins.open",
@@ -15,3 +17,4 @@ def test_dag_factory():
         create=True,
     ) as file_mock:
         assert DAGFactory.read_etl_description(file_path="/dev/null")
+        assert file_mock.call_count == 1
