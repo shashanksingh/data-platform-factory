@@ -45,10 +45,16 @@ class DAGFactory:
 
         extract = factory.create_extract(data.get("Extract", {}))
         # TODO fix transforms
-        transforms: Transform = factory.create_transform(data.get("Transform"))
+        transforms: Transform = (
+            factory.create_transform(data.get("Transform"))
+            if data.get("Transform")
+            else None
+        )
         load: Load = factory.create_load(data.get("Load", {}))
-        report: Report = factory.create_report(data.get("Report"))
-        wait: Wait = factory.create_wait(data.get("Wait"))
+        report: Report = (
+            factory.create_report(data.get("Report")) if data.get("Report") else None
+        )
+        wait: Wait = factory.create_wait(data.get("Wait")) if data.get("Wait") else None
 
         return DAGDescription(
             extract=extract, transforms=None, load=load, report=report, wait=wait

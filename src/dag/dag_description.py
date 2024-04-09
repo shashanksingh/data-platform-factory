@@ -12,4 +12,4 @@ class DAGDescription(BaseModel):
     transforms: Optional[Transform] = None
     load: Load
     report: Optional[Report] = None
-    wait: Wait
+    wait: Optional[Wait] = None

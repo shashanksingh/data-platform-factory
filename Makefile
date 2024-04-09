@@ -13,7 +13,7 @@ dev-install:
 	python3 -m pip install -r src/requirements.dev.txt
 
 unittest:
-	python3 -m pytest test -s
+	python3 -m pytest test -s -v
 
 
 
