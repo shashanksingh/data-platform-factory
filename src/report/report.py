@@ -15,7 +15,7 @@ class SlackReport(Report):
     channel_name: str
 
 
-class ReportFactory(type=EmailReport()):
+class ReportFactory():
     @staticmethod
     def create_report(report: Report) -> Report:
         return Report()
