@@ -3,3 +3,4 @@ pylint
 toml-sort
 ruff
 flake8
+mypy

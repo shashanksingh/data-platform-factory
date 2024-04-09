@@ -1,3 +1,5 @@
+.DEFAULT_GOAL := all
+
 setup:
 	python3 -m pip install --upgrade pip
 
@@ -10,7 +12,7 @@ test-install:
 dev-install:
 	python3 -m pip install -r src/requirements.dev.txt
 
-test:
+unittest:
 	python3 -m pytest test
 
 
@@ -29,3 +31,10 @@ flake8:
 
 pylint:
 	python3 -m pylint src
+
+mypy:
+	python3 -m mypy --install-types --non-interactive .
+
+lint: ruff  mypy flake8
+tests: unittest
+all: setup install lint tests
