@@ -3,3 +3,9 @@
 3. pyspark or some compute?
 4. centralized connection ? /( airflow connection)
 5. parameterize test
+6. val;idate                 [Extract]
+                source="postgres"
+                [Wait]
+
+                [Load]
+                destination="redshift"

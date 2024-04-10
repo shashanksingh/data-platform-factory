@@ -5,6 +5,9 @@ from src.dag.dag_description import DAGDescription
 from src.dag.dag_factory import DAGFactory
 from src.extract.extract import Extract
 from src.load.load import Load
+from src.report.report import Report
+from src.transform.transform import Transform
+from src.wait.wait import Wait
 
 
 @pytest.mark.parametrize(
@@ -22,32 +25,57 @@ from src.load.load import Load
             ),
         ),
         (
-                """
+            """
                 [Extract]
                 source="postgres"
                 [Wait]
+                after_source="catalog.table"
                 [Load]
                 destination="redshift"
             """,
-                DAGDescription(
-                    extract=Extract(source="postgres"), load=Load(destination="redshift")
-                ),
+            DAGDescription(
+                extract=Extract(source="postgres"),
+                load=Load(destination="redshift"),
+                wait=Wait(after_source="catalog.table"),
+            ),
         ),
         (
-                """
+            """
                 [Extract]
                 source="postgres"
-                [Wait]
                 [Load]
                 destination="redshift"
                 [Report]
+                source="slack"
             """,
-                DAGDescription(
-                    extract=Extract(source="postgres"), load=Load(destination="redshift")
-                ),
+            DAGDescription(
+                extract=Extract(source="postgres"),
+                load=Load(destination="redshift"),
+                report=Report(after_source="slack"),
+            ),
+        ),
+        (
+            """
+                [Extract]
+                source="postgres"
+                [Load]
+                destination="redshift"
+                [Transform]
+                name="dedup"
+            """,
+            DAGDescription(
+                extract=Extract(source="postgres"),
+                load=Load(destination="redshift"),
+                transform=Transform(after_source="slack"),
+            ),
         ),
     ],
-    ids=["extract-load", "extract-wait-load","extract-wait-load-report",],
+    ids=[
+        "extract-load",
+        "extract-wait-load",
+        "extract-load-report",
+        "extract-transform-load",
+    ],
 )
 def test_dag_factory(mock_file_content, expected_object):
     with unittest.mock.patch(

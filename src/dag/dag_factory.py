@@ -20,14 +20,8 @@ class DAGFactory:
         return Load(**config)
 
     @staticmethod
-    def create_transform(configs: list) -> Transform:
-        transforms: Transform = Transform()
-        # for transform_config in configs:
-        #     if "dedup" in transform_config:
-        #         transforms.append(DedupTransform())
-        #     elif "drop_na" in transform_config:
-        #         transforms.append(DropNATransform())
-        return transforms
+    def create_transform(configs: dict) -> Transform:
+        return Transform(**configs)
 
     @staticmethod
     def create_report(configs: dict) -> Report:
@@ -51,7 +45,6 @@ class DAGFactory:
             else None
         )
         load: Load = factory.create_load(data.get("Load", {}))
-        print("report",factory.create_report(data.get("Report")))
         report: Report = (
             factory.create_report(data.get("Report")) if data.get("Report") else None
         )
