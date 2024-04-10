@@ -4,3 +4,5 @@ toml-sort
 ruff
 flake8
 mypy
+pytest-sugar
+pytest-cov

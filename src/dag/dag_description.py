@@ -1,17 +1,16 @@
-from typing import List
-
-from pydantic import BaseModel, Field
-
-from ..extract.extract import Extract
-from ..load.load import Load
-from ..report.report import Report
-from ..transform.transform import Transform
-from ..wait.wait import Wait
+from typing import Optional
+from pydantic import BaseModel, ConfigDict
+from src.extract.extract import Extract
+from src.load.load import Load
+from src.report.report import Report
+from src.transform.transform import Transform
+from src.wait.wait import Wait
 
 
 class DAGDescription(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     extract: Extract
-    transforms: List[Transform]
+    transforms: Optional[Transform] = None
     load: Load
-    report: List[Report]
-    wait: Wait
+    report: Optional[Report] = None
+    wait: Optional[Wait] = None

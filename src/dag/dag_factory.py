@@ -1,12 +1,14 @@
-from dag_description import DAGDescription
+from typing import Dict
+
+from src.dag.dag_description import DAGDescription
 
 import toml
-
-from ..extract.extract import Extract
-from ..load.load import Load
-from ..report.report import Report
-from ..transform.transform import Transform
-from ..wait.wait import Wait
+from src.extract.extract import Extract
+from src.dag.dag_description_builder import DAGDescriptionBuilder
+from src.load.load import Load
+from src.report.report import Report
+from src.transform.transform import Transform
+from src.wait.wait import Wait
 
 
 class DAGFactory:
@@ -15,39 +17,37 @@ class DAGFactory:
         return Extract(**config)
 
     @staticmethod
-    def create_load(config: dict) -> Load:
+    def create_load(config: Dict) -> Load:
         return Load(**config)
 
     @staticmethod
-    def create_transform(configs: list) -> list:
-        transforms = []
-        # for transform_config in configs:
-        #     if "dedup" in transform_config:
-        #         transforms.append(DedupTransform())
-        #     elif "drop_na" in transform_config:
-        #         transforms.append(DropNATransform())
-        return transforms
+    def create_transform(configs: Dict) -> Transform:
+        return Transform(**configs)
 
     @staticmethod
-    def create_report(configs: list) -> Report:
-        pass
+    def create_report(configs: Dict) -> Report:
+        return Report(**configs)
 
     @staticmethod
-    def create_wait(configs: list) -> Wait:
-        pass
+    def create_wait(configs: Dict) -> Wait:
+        return Wait(**configs)
 
     @staticmethod
     def read_etl_description(file_path: str) -> DAGDescription:
         factory = DAGFactory()
         with open(file_path, "r") as file:
-            data = toml.load(file)
+            data = toml.loads(file.read())
 
-        extract = factory.create_extract(data.get("Extract", {}))
-        transforms = factory.create_transform(data.get("Transform", []))
-        load = factory.create_load(data.get("Load", {}))
-        report = factory.create_report(data.get("Report", {}))
-        wait = factory.create_wait(data.get("Wait", {}))
+        extract: Extract = factory.create_extract(data.get("Extract", {}))
+        load: Load = factory.create_load(data.get("Load", {}))
 
-        return DAGDescription(
-            extract=extract, transforms=transforms, load=load, report=report, wait=wait
-        )
+        dag_description_builder = DAGDescriptionBuilder()
+        dag_description_builder.with_extract(extract).with_load(load)
+
+        if data.get("Report"):
+            dag_description_builder.with_report(data.get("Report"))  # type: ignore
+        if data.get("Wait"):
+            dag_description_builder.with_wait(data.get("Wait"))  # type: ignore
+        if data.get("Transform"):
+            dag_description_builder.with_transforms(data.get("Transform"))  # type: ignore
+        return dag_description_builder.build()

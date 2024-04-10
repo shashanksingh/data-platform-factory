@@ -15,10 +15,16 @@ dev-install:
 unittest:
 	python3 -m pytest test
 
+unittest-coverge:
+	python3 -m pytest  test/ -p no:sugar
+
+unittest-verbose:
+	python3 -m pytest test -p no:sugar -s -v
+
 
 
 #toml_sort:
-#	python3 -m toml-sort toml/*.toml --all --in-place
+#	python3 -m definiations-sort definiations/*.definiations --all --in-place
 
 isort:
 	python3 -m  isort .

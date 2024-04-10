@@ -1,5 +1,7 @@
-from pydantic import BaseModel, Field
+from typing import Optional
+from pydantic import BaseModel, Field, ConfigDict
 
 
 class Transform(BaseModel):
-    source: str
+    model_config = ConfigDict(extra="forbid")
+    name: Optional[str] = None

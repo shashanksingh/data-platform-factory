@@ -1,8 +1,11 @@
-from pydantic import BaseModel, Field
+from typing import Optional
+
+from pydantic import BaseModel, ConfigDict
 
 
 class Wait(BaseModel):
-    after_source: str
-    before_transform: str
-    before_load: str
-    before_report: str
+    model_config = ConfigDict(extra="forbid")
+    after_source: Optional[str] = None
+    before_transform: Optional[str] = None
+    before_load: Optional[str] = None
+    before_report: Optional[str] = None
