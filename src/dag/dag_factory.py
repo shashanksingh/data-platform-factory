@@ -1,9 +1,10 @@
-from typing import List
+from typing import Dict
 
 from src.dag.dag_description import DAGDescription
 
 import toml
 from src.extract.extract import Extract
+from src.dag.dag_description_builder import DAGDescriptionBuilder
 from src.load.load import Load
 from src.report.report import Report
 from src.transform.transform import Transform
@@ -16,19 +17,19 @@ class DAGFactory:
         return Extract(**config)
 
     @staticmethod
-    def create_load(config: dict) -> Load:
+    def create_load(config: Dict) -> Load:
         return Load(**config)
 
     @staticmethod
-    def create_transform(configs: dict) -> Transform:
+    def create_transform(configs: Dict) -> Transform:
         return Transform(**configs)
 
     @staticmethod
-    def create_report(configs: dict) -> Report:
+    def create_report(configs: Dict) -> Report:
         return Report(**configs)
 
     @staticmethod
-    def create_wait(configs: dict) -> Wait:
+    def create_wait(configs: Dict) -> Wait:
         return Wait(**configs)
 
     @staticmethod
@@ -37,19 +38,16 @@ class DAGFactory:
         with open(file_path, "r") as file:
             data = toml.loads(file.read())
 
-        extract = factory.create_extract(data.get("Extract", {}))
-        # TODO fix transforms
-        transforms = (
-            factory.create_transform(data.get("Transform"))
-            if data.get("Transform")
-            else None
-        )
+        extract: Extract = factory.create_extract(data.get("Extract", {}))
         load: Load = factory.create_load(data.get("Load", {}))
-        report: Report = (
-            factory.create_report(data.get("Report")) if data.get("Report") else None
-        )
-        wait: Wait = factory.create_wait(data.get("Wait")) if data.get("Wait") else None
 
-        return DAGDescription(
-            extract=extract, transforms=transforms, load=load, report=report, wait=wait
-        )
+        dag_description_builder = DAGDescriptionBuilder()
+        dag_description_builder.with_extract(extract).with_load(load)
+
+        if data.get("Report"):
+            dag_description_builder.with_report(data.get("Report"))
+        if data.get("Wait"):
+            dag_description_builder.with_wait(data.get("Wait"))
+        if data.get("Transform"):
+            dag_description_builder.with_transforms(data.get("Transform"))
+        return dag_description_builder.build()
