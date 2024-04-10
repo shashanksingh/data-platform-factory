@@ -39,7 +39,7 @@ class DAGFactory:
 
         extract = factory.create_extract(data.get("Extract", {}))
         # TODO fix transforms
-        transforms: Transform = (
+        transforms = (
             factory.create_transform(data.get("Transform"))
             if data.get("Transform")
             else None

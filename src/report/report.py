@@ -1,15 +1,15 @@
 from typing import Optional, Dict
-
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 
 class Report(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     source: Optional[str] = None
 
 
 class ReportFactory:
     def __init__(self):
-        self.report_types: Dict = dict()
+        self.report_types = dict()
 
     def register_report_type(self, db_type):
         def decorator(fn):

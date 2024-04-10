@@ -51,7 +51,7 @@ from src.wait.wait import Wait
             DAGDescription(
                 extract=Extract(source="postgres"),
                 load=Load(destination="redshift"),
-                report=Report(after_source="slack"),
+                report=Report(source="slack"),
             ),
         ),
         (
@@ -66,7 +66,7 @@ from src.wait.wait import Wait
             DAGDescription(
                 extract=Extract(source="postgres"),
                 load=Load(destination="redshift"),
-                transform=Transform(after_source="slack"),
+                transforms=Transform(name="dedup"),
             ),
         ),
     ],
