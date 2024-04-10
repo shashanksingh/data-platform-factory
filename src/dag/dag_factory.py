@@ -51,5 +51,5 @@ class DAGFactory:
         wait: Wait = factory.create_wait(data.get("Wait")) if data.get("Wait") else None
 
         return DAGDescription(
-            extract=extract, transforms=None, load=load, report=report, wait=wait
+            extract=extract, transforms=transforms, load=load, report=report, wait=wait
         )
