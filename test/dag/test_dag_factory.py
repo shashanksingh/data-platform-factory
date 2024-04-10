@@ -84,7 +84,7 @@ def test_dag_factory(mock_file_content, expected_object):
         create=True,
     ) as file_mock:
         # given-when
-        dagfactory = DAGFactory.read_etl_description(file_path="/dev/null")
+        dag_factory = DAGFactory.read_etl_description(file_path="/dev/null")
         # then
-        assert dagfactory == expected_object
+        assert dag_factory == expected_object
         assert file_mock.call_count == 1
