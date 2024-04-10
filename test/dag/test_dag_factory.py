@@ -69,12 +69,31 @@ from src.wait.wait import Wait
                 transforms=Transform(name="dedup"),
             ),
         ),
+        (
+            """
+                    [Extract]
+                    source="postgres"
+                    [Wait]
+                    after_source="catalog.table"
+                    [Load]
+                    destination="redshift"
+                    [Transform]
+                    name="dedup"
+                """,
+            DAGDescription(
+                extract=Extract(source="postgres"),
+                wait=Wait(after_source="catalog.table"),
+                load=Load(destination="redshift"),
+                transforms=Transform(name="dedup"),
+            ),
+        ),
     ],
     ids=[
         "extract-load",
         "extract-wait-load",
         "extract-load-report",
         "extract-transform-load",
+        "extract-wait-transform-load",
     ],
 )
 def test_dag_factory(mock_file_content, expected_object):
