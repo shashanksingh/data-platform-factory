@@ -21,8 +21,33 @@ from src.load.load import Load
                 extract=Extract(source="postgres"), load=Load(destination="redshift")
             ),
         ),
+        (
+                """
+                [Extract]
+                source="postgres"
+                [Wait]
+                [Load]
+                destination="redshift"
+            """,
+                DAGDescription(
+                    extract=Extract(source="postgres"), load=Load(destination="redshift")
+                ),
+        ),
+        (
+                """
+                [Extract]
+                source="postgres"
+                [Wait]
+                [Load]
+                destination="redshift"
+                [Report]
+            """,
+                DAGDescription(
+                    extract=Extract(source="postgres"), load=Load(destination="redshift")
+                ),
+        ),
     ],
-    ids=["extract-load", ],
+    ids=["extract-load", "extract-wait-load","extract-wait-load-report",],
 )
 def test_dag_factory(mock_file_content, expected_object):
     with unittest.mock.patch(

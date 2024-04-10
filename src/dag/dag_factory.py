@@ -30,12 +30,12 @@ class DAGFactory:
         return transforms
 
     @staticmethod
-    def create_report(configs: list) -> Report:
-        return Report()
+    def create_report(configs: dict) -> Report:
+        return Report(**configs)
 
     @staticmethod
-    def create_wait(configs: list) -> Wait:
-        return Wait()
+    def create_wait(configs: dict) -> Wait:
+        return Wait(**configs)
 
     @staticmethod
     def read_etl_description(file_path: str) -> DAGDescription:
@@ -51,6 +51,7 @@ class DAGFactory:
             else None
         )
         load: Load = factory.create_load(data.get("Load", {}))
+        print("report",factory.create_report(data.get("Report")))
         report: Report = (
             factory.create_report(data.get("Report")) if data.get("Report") else None
         )
