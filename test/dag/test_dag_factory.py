@@ -22,6 +22,7 @@ from src.load.load import Load
             ),
         ),
     ],
+    ids=["extract-load", ],
 )
 def test_dag_factory(mock_file_content, expected_object):
     with unittest.mock.patch(
