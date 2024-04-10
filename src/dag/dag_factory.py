@@ -45,9 +45,9 @@ class DAGFactory:
         dag_description_builder.with_extract(extract).with_load(load)
 
         if data.get("Report"):
-            dag_description_builder.with_report(data.get("Report"))
+            dag_description_builder.with_report(data.get("Report"))  # type: ignore
         if data.get("Wait"):
-            dag_description_builder.with_wait(data.get("Wait"))
+            dag_description_builder.with_wait(data.get("Wait"))  # type: ignore
         if data.get("Transform"):
-            dag_description_builder.with_transforms(data.get("Transform"))
+            dag_description_builder.with_transforms(data.get("Transform"))  # type: ignore
         return dag_description_builder.build()

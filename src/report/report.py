@@ -1,5 +1,5 @@
 from typing import Optional, Dict
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, ConfigDict
 
 
 class Report(BaseModel):

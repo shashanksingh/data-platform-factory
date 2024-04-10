@@ -1,5 +1,5 @@
 from typing import Optional
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, ConfigDict
 from src.extract.extract import Extract
 from src.load.load import Load
 from src.report.report import Report
