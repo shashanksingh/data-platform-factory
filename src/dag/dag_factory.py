@@ -51,3 +51,7 @@ class DAGFactory:
         if data.get("Transform"):
             dag_description_builder.with_transforms(data.get("Transform"))  # type: ignore
         return dag_description_builder.build()
+
+    @staticmethod
+    def render(dag_description: DAGDescription) -> str:
+        return ""
