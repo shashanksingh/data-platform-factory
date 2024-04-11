@@ -1,8 +1,7 @@
 from typing import Dict
-
-from src.dag.dag_description import DAGDescription
-
+from jinja2 import Environment, BaseLoader, FileSystemLoader
 import toml
+from src.dag.dag_description import DAGDescription
 from src.extract.extract import Extract
 from src.dag.dag_description_builder import DAGDescriptionBuilder
 from src.load.load import Load
@@ -54,4 +53,8 @@ class DAGFactory:
 
     @staticmethod
     def render(dag_description: DAGDescription) -> str:
-        return ""
+        env = Environment(loader=FileSystemLoader('src.templates'))
+        template = env.get_template('child_template.html')
+        output = template.render(dag_description)
+        print(output)
+        return output
