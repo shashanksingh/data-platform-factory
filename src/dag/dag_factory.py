@@ -56,5 +56,6 @@ class DAGFactory:
         env = Environment(loader=FileSystemLoader("src/templates"))
         template = env.get_template("base.py.jinja")
 
-        output = template.render(dag_description)
+        output = template.render(dag_description=dag_description.dict())
+        print("[output]=>", f"{output}")
         return output

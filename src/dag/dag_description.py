@@ -1,5 +1,4 @@
 from typing import Optional, List
-from pendulum import datetime
 from pydantic import BaseModel, ConfigDict
 from src.extract.extract import Extract
 from src.load.load import Load

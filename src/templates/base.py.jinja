@@ -6,14 +6,14 @@ from airflow.models.dag import DAG
 
 
 dag1 = DAG(
-    dag_id="example_branch_datetime_operator",
+    dag_id="{{ dag_description.extract.source }}_to_{{ dag_description.load.destination }}",
     start_date=pendulum.datetime(2021, 1, 1, tz="UTC"),
-    catchup=False,
-    tags=["example"],
-    schedule="@daily",
+    catchup={{dag_description.catchup}},
+    tags={{ dag_description.tags }},
+    schedule="{{ dag_description.schedule }}",
 )
 
-{% if 'extract' in dag_definition %}
+{% if 'extract' in dag_description %}
    # extract
 {% endif %}
 

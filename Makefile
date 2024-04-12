@@ -30,16 +30,16 @@ isort:
 	python3 -m  isort .
 
 ruff:
-	python3 -m ruff format
+	python3 -m ruff format src/ test/
 
 flake8:
-	python3 -m flake8 .
+	python3 -m flake8 src/ test/
 
 pylint:
-	python3 -m pylint src
+	python3 -m pylint src/
 
 mypy:
-	python3 -m mypy --install-types --non-interactive .
+	python3 -m mypy --install-types --non-interactive src/
 
 
 generate-package-from-cli:
