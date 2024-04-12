@@ -1,5 +1,6 @@
 import click
 import glob
+from pathlib import Path
 from src.dag.dag_factory import DAGFactory
 
 
@@ -18,10 +19,12 @@ def generate_dags(directory: str) -> None:
     """
     click.echo(f"Hello {directory}!!")
     files = glob.glob(f"{directory}/*.toml")
+    click.echo(f"Hello {files}!!")
     dag_factory = DAGFactory()
     for file in files:
         output = dag_factory.render(dag_factory.read_etl_description(file_path=file))
-        with open("build/{file.split('.')[0]}.py", mode="w") as file_context:
+        filename = Path(file).name
+        with open(f"build/{filename.split('.')[0]}.py", mode="w") as file_context:
             file_context.write(output)
 
 

@@ -53,8 +53,22 @@ class DAGFactory:
 
     @staticmethod
     def render(dag_description: DAGDescription) -> str:
-        env = Environment(loader=FileSystemLoader("src.templates"))
-        template = env.get_template("child_template.html")
+        env = Environment(loader=TrackingFileSystemLoader("src/templates"))
+        print("Loaded templates:", env.loader.loaded_templates)
+        #
+        template = env.get_template("base.py.jinja")
+
         output = template.render(dag_description)
-        print(output)
-        return output
+        # print(output)
+        return ""
+
+
+class TrackingFileSystemLoader(FileSystemLoader):
+    def __init__(self, searchpath, encoding="utf-8"):
+        super().__init__(searchpath, encoding)
+        self.loaded_templates = set()
+
+    def get_source(self, environment, template):
+        source, filename, uptodate = super().get_source(environment, template)
+        self.loaded_templates.add(filename)
+        return source, filename, uptodate

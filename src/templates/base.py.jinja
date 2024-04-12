@@ -14,7 +14,7 @@ dag1 = DAG(
 )
 
 {% if 'extract' in dag_definition %}
-    data.extract.template
+   # extract
 {% endif %}
 
 # extract >> wait>> transform >> wait >> load
