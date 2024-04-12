@@ -53,8 +53,8 @@ class DAGFactory:
 
     @staticmethod
     def render(dag_description: DAGDescription) -> str:
-        env = Environment(loader=FileSystemLoader('src.templates'))
-        template = env.get_template('child_template.html')
+        env = Environment(loader=FileSystemLoader("src.templates"))
+        template = env.get_template("child_template.html")
         output = template.render(dag_description)
         print(output)
         return output

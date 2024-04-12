@@ -22,7 +22,5 @@ def transpile(directory: str) -> None:
             file_context.write(output)
 
 
-
-
 if __name__ == "__main__":
     transpile()
