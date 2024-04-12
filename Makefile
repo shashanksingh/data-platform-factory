@@ -23,8 +23,8 @@ unittest-verbose:
 
 
 
-#toml_sort:
-#	python3 -m definiations-sort definiations/*.definiations --all --in-place
+toml_sort:
+	toml-sort  definitions/*.toml  --all --in-place
 
 isort:
 	python3 -m  isort .
@@ -40,6 +40,12 @@ pylint:
 
 mypy:
 	python3 -m mypy --install-types --non-interactive .
+
+
+generate-package-from-cli:
+	cd src && python3 setup.py sdist && python3 -m pip install dist/generate_dags-0.1.tar.gz
+
+
 
 lint: ruff  mypy flake8
 tests: unittest

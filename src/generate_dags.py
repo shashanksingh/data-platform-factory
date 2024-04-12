@@ -5,12 +5,15 @@ from src.dag.dag_factory import DAGFactory
 
 @click.command()
 @click.option(
-    "--url", prompt="URL to Crawl", required=True, help="The URL you want us to crawl"
+    "--directory",
+    prompt="Directory to Crawl",
+    required=True,
+    help="The directory containing the TOML files",
 )
-def transpile(directory: str) -> None:
+def generate_dags(directory: str) -> None:
     """
     CLI interface for .
-    :param dir: URL that needs to be crawled, and push it to queue
+    :param directory: The directory containing the TOML files
     :return: True or False depending on whether it was able to crawl url
     """
     click.echo(f"Hello {directory}!!")
@@ -23,4 +26,4 @@ def transpile(directory: str) -> None:
 
 
 if __name__ == "__main__":
-    transpile()
+    generate_dags()

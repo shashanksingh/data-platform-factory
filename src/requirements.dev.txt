@@ -6,3 +6,4 @@ flake8
 mypy
 pytest-sugar
 pytest-cov
+setuptools

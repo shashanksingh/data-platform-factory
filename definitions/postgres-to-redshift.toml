@@ -1,0 +1,5 @@
+[Extract]
+source = "postgres"
+
+[Load]
+destination = "redshift"
