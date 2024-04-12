@@ -1,5 +1,5 @@
 [Extract]
-source = "postgres"
+source = "postgress"
 
 [Load]
 destination = "redshift"
