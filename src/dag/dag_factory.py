@@ -1,5 +1,5 @@
 from typing import Dict
-from jinja2 import Environment, BaseLoader, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader
 import toml
 from src.dag.dag_description import DAGDescription
 from src.extract.extract import Extract
