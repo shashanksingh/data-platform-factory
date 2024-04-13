@@ -12,7 +12,6 @@ dag1 = DAG(
     tags={{ dag_description.dag.tags }},
     schedule="{{ dag_description.dag.schedule }}",
 )
-{{ dag_description }}
 {% if 'extract' in dag_description %}
    # extract
 {% endif %}
