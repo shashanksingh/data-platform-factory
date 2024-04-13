@@ -1,3 +1,6 @@
+[DAG]
+schedule = "@continuous"
+
 [Extract]
 source = "postgress"
 
