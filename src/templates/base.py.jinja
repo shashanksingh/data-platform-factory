@@ -12,9 +12,25 @@ dag1 = DAG(
     tags={{ dag_description.tags }},
     schedule="{{ dag_description.schedule }}",
 )
-
+{{ dag_description }}
 {% if 'extract' in dag_description %}
    # extract
+{% endif %}
+
+{% if 'load' in dag_description %}
+   # load
+{% endif %}
+
+{% if 'wait' in dag_description and dag_description.get("wait") %}
+   # wait
+{% endif %}
+
+{% if 'report' in dag_description and dag_description.get("report") %}
+   # report
+{% endif %}
+
+{% if 'transform' in dag_description and dag_description.get("transform") %}
+   # transform
 {% endif %}
 
 # extract >> wait>> transform >> wait >> load

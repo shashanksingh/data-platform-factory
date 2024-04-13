@@ -21,6 +21,7 @@ from click.testing import CliRunner
     ids=["extract-load"],
 )
 def test_generate_dags(mock_file_content, expected_output):
+    # This makes sure we don't actually generate a build python file while unittesting
     with unittest.mock.patch(
         "builtins.open",
         new=unittest.mock.mock_open(read_data=mock_file_content),
