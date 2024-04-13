@@ -12,9 +12,8 @@ class DAG(BaseModel):
     tags: Optional[List[str]] = ["example"]
     schedule: Optional[str] = "@daily"
 
-    @field_validator("schedule")
     @classmethod
     def schedule_must_be_from_valid_airflow_list(cls, value: str) -> str:
         if value not in AIRFLOW_VALID_SCHEDULE_STRINGS:
-            raise ValueError("must contain a space")
+            raise ValueError("must be from AIRFLOW_VALID_SCHEDULE_STRINGS")
         return value.title()
