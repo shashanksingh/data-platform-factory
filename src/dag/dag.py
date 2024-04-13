@@ -1,7 +1,14 @@
 from typing import Optional, List
 from pydantic import BaseModel, ConfigDict, field_validator
 
-AIRFLOW_VALID_SCHEDULE_STRINGS = {"@continuous"}
+AIRFLOW_VALID_SCHEDULE_STRINGS = {
+    "@continuous",
+    "@daily",
+    "@weekly",
+    "@once",
+    "@hourly",
+    "@monthly",
+}
 
 
 class DAG(BaseModel):
@@ -12,6 +19,7 @@ class DAG(BaseModel):
     tags: Optional[List[str]] = ["example"]
     schedule: Optional[str] = "@daily"
 
+    @field_validator("schedule")
     @classmethod
     def schedule_must_be_from_valid_airflow_list(cls, value: str) -> str:
         if value not in AIRFLOW_VALID_SCHEDULE_STRINGS:

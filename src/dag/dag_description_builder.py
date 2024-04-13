@@ -42,6 +42,7 @@ class DAGDescriptionBuilder:
 
     def build(self):
         return DAGDescription(
+            dag=self._dag,
             extract=self._extract,
             transforms=self._transforms,
             load=self._load,
