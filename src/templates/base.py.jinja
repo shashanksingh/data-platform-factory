@@ -1,0 +1,36 @@
+# type: ignore
+# flake8: noqa
+from __future__ import annotations
+import pendulum
+from airflow.models.dag import DAG
+
+
+dag1 = DAG(
+    dag_id="{{ dag_description.extract.source }}_to_{{ dag_description.load.destination }}",
+    start_date=pendulum.datetime(2021, 1, 1, tz="UTC"),
+    catchup={{dag_description.dag.catchup}},
+    tags={{ dag_description.dag.tags }},
+    schedule="{{ dag_description.dag.schedule }}",
+)
+{% if 'extract' in dag_description %}
+   # extract
+{% endif %}
+
+{% if 'load' in dag_description %}
+   # load
+{% endif %}
+
+{% if 'wait' in dag_description and dag_description.get("wait") %}
+   # wait
+{% endif %}
+
+{% if 'report' in dag_description and dag_description.get("report") %}
+   # report
+{% endif %}
+
+{% if 'transform' in dag_description and dag_description.get("transform") %}
+   # transform
+{% endif %}
+
+# extract >> wait>> transform >> wait >> load
+# [END howto_branch_datetime_operator]

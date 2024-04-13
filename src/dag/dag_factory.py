@@ -1,8 +1,9 @@
 from typing import Dict
-
-from src.dag.dag_description import DAGDescription
-
+from jinja2 import Environment, FileSystemLoader
 import toml
+
+from src.dag.dag import DAG
+from src.dag.dag_description import DAGDescription
 from src.extract.extract import Extract
 from src.dag.dag_description_builder import DAGDescriptionBuilder
 from src.load.load import Load
@@ -13,7 +14,11 @@ from src.wait.wait import Wait
 
 class DAGFactory:
     @staticmethod
-    def create_extract(config: dict) -> Extract:
+    def create_dag(config: Dict) -> DAG:
+        return DAG(**config)
+
+    @staticmethod
+    def create_extract(config: Dict) -> Extract:
         return Extract(**config)
 
     @staticmethod
@@ -38,11 +43,12 @@ class DAGFactory:
         with open(file_path, "r") as file:
             data = toml.loads(file.read())
 
+        dag: DAG = factory.create_dag(data.get("DAG", {}))
         extract: Extract = factory.create_extract(data.get("Extract", {}))
         load: Load = factory.create_load(data.get("Load", {}))
 
         dag_description_builder = DAGDescriptionBuilder()
-        dag_description_builder.with_extract(extract).with_load(load)
+        (dag_description_builder.with_dag(dag).with_extract(extract).with_load(load))
 
         if data.get("Report"):
             dag_description_builder.with_report(data.get("Report"))  # type: ignore
@@ -51,3 +57,11 @@ class DAGFactory:
         if data.get("Transform"):
             dag_description_builder.with_transforms(data.get("Transform"))  # type: ignore
         return dag_description_builder.build()
+
+    @staticmethod
+    def render(dag_description: DAGDescription) -> str:
+        env = Environment(loader=FileSystemLoader("src/templates"))
+        template = env.get_template("base.py.jinja")
+
+        output = template.render(dag_description=dag_description.dict())
+        return output

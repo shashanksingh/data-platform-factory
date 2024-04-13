@@ -4,15 +4,21 @@ from src.load.load import Load
 from src.report.report import Report
 from src.transform.transform import Transform
 from src.wait.wait import Wait
+from src.dag.dag import DAG
 
 
 class DAGDescriptionBuilder:
     def __init__(self):
+        self._dag = None
         self._extract = None
         self._transforms = None
         self._load = None
         self._report = None
         self._wait = None
+
+    def with_dag(self, dag: DAG):
+        self._dag = dag
+        return self
 
     def with_extract(self, extract: Extract):
         self._extract = extract
@@ -36,6 +42,7 @@ class DAGDescriptionBuilder:
 
     def build(self):
         return DAGDescription(
+            dag=self._dag,
             extract=self._extract,
             transforms=self._transforms,
             load=self._load,
