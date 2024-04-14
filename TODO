@@ -9,3 +9,6 @@
 
                 [Load]
                 destination="redshift"
+
+
+7. eventually subdirectory should automatically be added to tag name

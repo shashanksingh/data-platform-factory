@@ -15,6 +15,8 @@ from src.wait.wait import Wait
     [
         (
             """
+            [DAG]
+            type="postgresql-to-postgresql"
             [Extract]
             source="postgres"
             [Load]
@@ -25,7 +27,9 @@ from src.wait.wait import Wait
             ),
         ),
         (
-            """
+            """ 
+                [DAG]
+                type="postgresql-to-postgresql"
                 [Extract]
                 source="postgres"
                 [Wait]
@@ -41,6 +45,8 @@ from src.wait.wait import Wait
         ),
         (
             """
+                [DAG]
+                type="postgresql-to-postgresql"
                 [Extract]
                 source="postgres"
                 [Load]
@@ -56,6 +62,8 @@ from src.wait.wait import Wait
         ),
         (
             """
+                [DAG]
+                type="postgresql-to-postgresql"
                 [Extract]
                 source="postgres"
                 [Load]
@@ -71,6 +79,8 @@ from src.wait.wait import Wait
         ),
         (
             """
+                    [DAG]
+                    type="postgresql-to-postgresql"
                     [Extract]
                     source="postgres"
                     [Wait]
