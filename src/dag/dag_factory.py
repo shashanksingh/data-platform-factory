@@ -65,3 +65,7 @@ class DAGFactory:
 
         output = template.render(dag_description=dag_description.dict())
         return output
+
+    @staticmethod
+    def generate_dag_name(dag_description: DAGDescription) -> str:
+        return f"load_from_{str(dag_description.extract.source)}_to_{str(dag_description.load.destination)}"
