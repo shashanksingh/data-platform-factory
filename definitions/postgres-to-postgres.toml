@@ -1,0 +1,9 @@
+[DAG]
+schedule = "@continuous"
+type="postgresql-to-postgresql"
+
+[Extract]
+source = "postgress"
+
+[Load]
+destination = "redshift"
