@@ -2,6 +2,8 @@ import click
 import glob
 from src.dag.dag_factory import DAGFactory
 
+COUNT_OF_ITEMS_WITH_ONE_SUBDIRECTORY: int = 2
+
 
 @click.command()
 @click.option(
@@ -22,7 +24,7 @@ def generate_dags(directory: str) -> None:
     for file in files:
         dag_description = dag_factory.read_etl_description(file_path=file)
         output = dag_factory.render(dag_description)
-        if len(file.split("/")) > 2:
+        if len(file.split("/")) > COUNT_OF_ITEMS_WITH_ONE_SUBDIRECTORY:
             project_name = file.split("/")[1]
         else:
             raise Exception("Project Name as subdirectory is needed")

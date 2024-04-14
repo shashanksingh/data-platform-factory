@@ -1,6 +1,8 @@
 import unittest
 import unittest.mock
 import pytest
+
+from src.dag.dag import DAG
 from src.dag.dag_description import DAGDescription
 from src.dag.dag_factory import DAGFactory
 from src.extract.extract import Extract
@@ -15,15 +17,18 @@ from src.wait.wait import Wait
     [
         (
             """
-            [DAG]
-            type="postgresql-to-postgresql"
-            [Extract]
-            source="postgres"
-            [Load]
-            destination="redshift"
+                [DAG]
+                type="postgresql-to-postgresql"  
+                [Extract]
+                source = "postgres"  
+                [Load]
+                destination = "redshift"
+
         """,
             DAGDescription(
-                extract=Extract(source="postgres"), load=Load(destination="redshift")
+                dag=DAG(type="postgresql-to-postgresql"),
+                extract=Extract(source="postgres"),
+                load=Load(destination="redshift"),
             ),
         ),
         (
@@ -38,6 +43,7 @@ from src.wait.wait import Wait
                 destination="redshift"
             """,
             DAGDescription(
+                dag=DAG(type="postgresql-to-postgresql"),
                 extract=Extract(source="postgres"),
                 load=Load(destination="redshift"),
                 wait=Wait(after_source="catalog.table"),
@@ -55,14 +61,14 @@ from src.wait.wait import Wait
                 source="slack"
             """,
             DAGDescription(
+                dag=DAG(type="postgresql-to-postgresql"),
                 extract=Extract(source="postgres"),
                 load=Load(destination="redshift"),
                 report=Report(source="slack"),
             ),
         ),
         (
-            """
-                [DAG]
+            """[DAG]
                 type="postgresql-to-postgresql"
                 [Extract]
                 source="postgres"
@@ -72,15 +78,15 @@ from src.wait.wait import Wait
                 name="dedup"
             """,
             DAGDescription(
+                dag=DAG(type="postgresql-to-postgresql"),
                 extract=Extract(source="postgres"),
                 load=Load(destination="redshift"),
                 transforms=Transform(name="dedup"),
             ),
         ),
         (
-            """
-                    [DAG]
-                    type="postgresql-to-postgresql"
+            """[DAG]
+                type="postgresql-to-postgresql"
                     [Extract]
                     source="postgres"
                     [Wait]
@@ -91,6 +97,7 @@ from src.wait.wait import Wait
                     name="dedup"
                 """,
             DAGDescription(
+                dag=DAG(type="postgresql-to-postgresql"),
                 extract=Extract(source="postgres"),
                 wait=Wait(after_source="catalog.table"),
                 load=Load(destination="redshift"),

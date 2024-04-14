@@ -10,6 +10,8 @@ from click.testing import CliRunner
     [
         (
             """
+            [DAG]
+            type="postgresql-to-postgresql"
             [Extract]
             source="postgres"
             [Load]
