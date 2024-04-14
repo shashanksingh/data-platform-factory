@@ -18,9 +18,9 @@ from src.wait.wait import Wait
         (
             """
                 [DAG]
-                type="postgresql-to-postgresql"  
+                type="postgresql-to-postgresql"
                 [Extract]
-                source = "postgres"  
+                source = "postgres"
                 [Load]
                 destination = "redshift"
 
@@ -32,7 +32,7 @@ from src.wait.wait import Wait
             ),
         ),
         (
-            """ 
+            """
                 [DAG]
                 type="postgresql-to-postgresql"
                 [Extract]
