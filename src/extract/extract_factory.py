@@ -15,7 +15,6 @@ class ExtractFactoryMeta(type):
 
     @classmethod
     def create(cls, extract_type, **config):
-        print("[registry]", cls._registry)
         extract_class = cls._registry.get(extract_type.lower())
         if extract_class:
             return extract_class(**config)
@@ -24,7 +23,6 @@ class ExtractFactoryMeta(type):
 
     @classmethod
     def register_child(cls, extract_child_name: str, extract_child_class: Any) -> None:
-        print("[register_child]", extract_child_name)
         cls._registry[extract_child_name] = extract_child_class
 
     @classmethod
@@ -37,7 +35,6 @@ class ExtractFactoryMeta(type):
                 and file_name != "shape_factory.py"
             ):
                 module_name = file_name[:-3]  # Remove '.py' extension
-                print(module_name)
                 # TODO
                 # module = __import__(module_name)
                 # for name, obj in inspect.getmembers(module):

@@ -5,7 +5,6 @@ import pytest
 from src.dag.dag import DAG
 from src.dag.dag_description import DAGDescription
 from src.dag.dag_factory import DAGFactory
-from src.extract.extract import Extract
 from src.extract.postgres import Postgres
 from src.load.load import Load
 from src.report.report import Report
@@ -31,7 +30,7 @@ from src.wait.wait import Wait
         """,
                 DAGDescription(
                     dag=DAG(type="rdbms-to-dwh"),
-                    extract=Postgres(conn_id="transactions_default"),
+                    extract=Postgres(conn_id="transactions_default", database_name="database", table_name="table"),
                     load=Load(destination="redshift"),
                 ),
         ),
@@ -51,7 +50,7 @@ from src.wait.wait import Wait
             """,
                 DAGDescription(
                     dag=DAG(type="rdbms-to-dwh"),
-                    extract=Postgres(conn_id="transactions_default"),
+                    extract=Postgres(conn_id="transactions_default", database_name="database", table_name="table"),
                     load=Load(destination="redshift"),
                     wait=Wait(after_source="catalog.table"),
                 ),
@@ -68,11 +67,11 @@ from src.wait.wait import Wait
                 [Load]
                 destination="redshift"
                 [Report]
-                name="slack"
+                source="slack"
             """,
                 DAGDescription(
                     dag=DAG(type="rdbms-to-dwh"),
-                    extract=Postgres(conn_id="transactions_default"),
+                    extract=Postgres(conn_id="transactions_default", database_name="database", table_name="table"),
                     load=Load(destination="redshift"),
                     report=Report(source="slack"),
                 ),
@@ -92,7 +91,7 @@ from src.wait.wait import Wait
             """,
                 DAGDescription(
                     dag=DAG(type="rdbms-to-dwh"),
-                    extract=Postgres(conn_id="transactions_default"),
+                    extract=Postgres(conn_id="transactions_default", database_name="database", table_name="table"),
                     load=Load(destination="redshift"),
                     transforms=Transform(name="dedup"),
                 ),
@@ -114,7 +113,7 @@ from src.wait.wait import Wait
                 """,
                 DAGDescription(
                     dag=DAG(type="rdbms-to-dwh"),
-                    extract=Postgres(conn_id="transactions_default"),
+                    extract=Postgres(conn_id="transactions_default", database_name="database", table_name="table"),
                     wait=Wait(after_source="catalog.table"),
                     load=Load(destination="redshift"),
                     transforms=Transform(name="dedup"),

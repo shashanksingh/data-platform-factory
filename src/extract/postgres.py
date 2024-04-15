@@ -7,6 +7,7 @@ class Postgres(Extract, Template):
     database_name: str
     table_name: str
     sync_type: str = "FULL"
+    type: str = "postgres"
 
     @property
     def template(self):

@@ -20,7 +20,6 @@ class DAGFactory:
 
     @staticmethod
     def create_extract(config: Dict) -> Extract:
-        print("[Config]", config)
         ExtractFactory.auto_register_classes()
         return ExtractFactory.create(extract_type=config.get("type"), **config)
 

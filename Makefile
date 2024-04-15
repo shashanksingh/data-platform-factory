@@ -19,7 +19,7 @@ unittest-coverge:
 	python3 -m pytest  test/ -p no:sugar
 
 unittest-verbose:
-	python3 -m pytest test -p no:sugar -s -v
+	python3 -m pytest test -p no:sugar -s -vv
 
 
 
