@@ -24,9 +24,9 @@ class ExtractFactoryMeta(type):
 
     @classmethod
     def create(cls, extract_type):
-        shape_class = cls._registry.get(extract_type.lower())
-        if shape_class:
-            return shape_class()
+        extract_class = cls._registry.get(extract_type.lower())
+        if extract_class:
+            return extract_class()
         else:
             raise ValueError(f"Unknown shape type: {extract_type}")
 

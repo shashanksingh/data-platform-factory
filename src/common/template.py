@@ -5,4 +5,4 @@ class Template(ABC):
     @property
     @abstractmethod
     def template(self):
-        """The template """
+        """The template"""
