@@ -5,6 +5,8 @@ type="postgresql-to-postgresql"
 [Extract]
 conn_id = "transactions_default"
 type="postgres"
+database_name="database"
+table_name="table"
 
 [Load]
 destination = "redshift"

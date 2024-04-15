@@ -14,11 +14,11 @@ class ExtractFactoryMeta(type):
         return new_class
 
     @classmethod
-    def create(cls, extract_type):
+    def create(cls, extract_type, **config):
         print("[registry]", cls._registry)
         extract_class = cls._registry.get(extract_type.lower())
         if extract_class:
-            return extract_class()
+            return extract_class(**config)
         else:
             raise ValueError(f"Unknown Extract Type: {extract_type}")
 
@@ -48,6 +48,3 @@ class ExtractFactoryMeta(type):
 
 class ExtractFactory(metaclass=ExtractFactoryMeta):
     pass
-
-
-# some sort of autoloader
