@@ -18,7 +18,7 @@ from src.wait.wait import Wait
         (
             """
                 [DAG]
-                type="postgresql-to-postgresql"
+                type="rdbms-to-dwh"
                 [Extract]
                 name = "postgres"
                 [Load]
@@ -26,7 +26,7 @@ from src.wait.wait import Wait
 
         """,
             DAGDescription(
-                dag=DAG(type="postgresql-to-postgresql"),
+                dag=DAG(type="rdbms-to-dwh"),
                 extract=Extract(source="postgres"),
                 load=Load(destination="redshift"),
             ),
@@ -34,7 +34,7 @@ from src.wait.wait import Wait
         (
             """
                 [DAG]
-                type="postgresql-to-postgresql"
+                type="rdbms-to-dwh"
                 [Extract]
                 name="postgres"
                 [Wait]
@@ -43,7 +43,7 @@ from src.wait.wait import Wait
                 destination="redshift"
             """,
             DAGDescription(
-                dag=DAG(type="postgresql-to-postgresql"),
+                dag=DAG(type="rdbms-to-dwh"),
                 extract=Extract(source="postgres"),
                 load=Load(destination="redshift"),
                 wait=Wait(after_source="catalog.table"),
@@ -52,7 +52,7 @@ from src.wait.wait import Wait
         (
             """
                 [DAG]
-                type="postgresql-to-postgresql"
+                type="rdbms-to-dwh"
                 [Extract]
                 name="postgres"
                 [Load]
@@ -61,7 +61,7 @@ from src.wait.wait import Wait
                 name="slack"
             """,
             DAGDescription(
-                dag=DAG(type="postgresql-to-postgresql"),
+                dag=DAG(type="rdbms-to-dwh"),
                 extract=Extract(source="postgres"),
                 load=Load(destination="redshift"),
                 report=Report(source="slack"),
@@ -69,7 +69,7 @@ from src.wait.wait import Wait
         ),
         (
             """[DAG]
-                type="postgresql-to-postgresql"
+                type="rdbms-to-dwh"
                 [Extract]
                 name="postgres"
                 [Load]
@@ -78,7 +78,7 @@ from src.wait.wait import Wait
                 name="dedup"
             """,
             DAGDescription(
-                dag=DAG(type="postgresql-to-postgresql"),
+                dag=DAG(type="rdbms-to-dwh"),
                 extract=Extract(source="postgres"),
                 load=Load(destination="redshift"),
                 transforms=Transform(name="dedup"),
@@ -86,7 +86,7 @@ from src.wait.wait import Wait
         ),
         (
             """[DAG]
-                type="postgresql-to-postgresql"
+                type="rdbms-to-dwh"
                     [Extract]
                     name="postgres"
                     [Wait]
@@ -97,7 +97,7 @@ from src.wait.wait import Wait
                     name="dedup"
                 """,
             DAGDescription(
-                dag=DAG(type="postgresql-to-postgresql"),
+                dag=DAG(type="rdbms-to-dwh"),
                 extract=Extract(source="postgres"),
                 wait=Wait(after_source="catalog.table"),
                 load=Load(destination="redshift"),

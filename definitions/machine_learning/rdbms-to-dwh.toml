@@ -1,6 +1,6 @@
 [DAG]
 schedule = "@continuous"
-type="postgresql-to-postgresql"
+type="rdbms-to-dwh"
 
 [Extract]
 conn_id = "transactions_default"

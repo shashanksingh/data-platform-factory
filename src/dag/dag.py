@@ -10,7 +10,7 @@ AIRFLOW_VALID_SCHEDULE_STRINGS = {
     "@monthly",
 }
 
-DAG_TYPE_MUST_BE_VALID = {"postgresql-to-postgresql"}
+DAG_TYPE_MUST_BE_VALID = {"rdbms-to-dwh"}
 
 
 class DAG(BaseModel):

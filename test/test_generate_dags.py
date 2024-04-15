@@ -11,7 +11,7 @@ from click.testing import CliRunner
         (
             """
             [DAG]
-            type="postgresql-to-postgresql"
+            type="rdbms-to-dwh"
             [Extract]
             name="postgres"
             [Load]
