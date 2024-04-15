@@ -1,5 +1,5 @@
 from src.common.template import Template
-from src.extract.extract import Extract, ExtractFactory
+from src.extract.extract import Extract
 
 
 class Postgres(Extract, Template):
@@ -14,9 +14,3 @@ class Postgres(Extract, Template):
             task_id="extract_{self.database_name}_{self.table_name}",
             sql="SELECT * from {self.database_name}.{self.table_name};",
         )"""
-
-
-
-ExtractFactory.register_child(
-    extract_child_name="postgres", extract_child_class=Postgres
-)

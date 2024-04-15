@@ -4,8 +4,9 @@ import toml
 
 from src.dag.dag import DAG
 from src.dag.dag_description import DAGDescription
-from src.extract.extract import ExtractFactory, Extract
+from src.extract.extract import Extract
 from src.dag.dag_description_builder import DAGDescriptionBuilder
+from src.extract.extract_factory import ExtractFactory
 from src.load.load import Load
 from src.report.report import Report
 from src.transform.transform import Transform
@@ -19,7 +20,8 @@ class DAGFactory:
 
     @staticmethod
     def create_extract(config: Dict) -> Extract:
-        print("[Config]",config)
+        print("[Config]", config)
+        ExtractFactory.auto_register_classes()
         return ExtractFactory.create(extract_type=config.get("type"))
 
     @staticmethod

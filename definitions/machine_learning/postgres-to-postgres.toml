@@ -3,7 +3,7 @@ schedule = "@continuous"
 type="postgresql-to-postgresql"
 
 [Extract]
-conn_id = "postgress"
+conn_id = "transactions_default"
 type="postgres"
 
 [Load]
