@@ -16,6 +16,7 @@ class Postgres(Extract, Template):
         )"""
 
 
+
 ExtractFactory.register_child(
     extract_child_name="postgres", extract_child_class=Postgres
 )

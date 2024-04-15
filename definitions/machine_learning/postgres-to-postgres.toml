@@ -3,7 +3,8 @@ schedule = "@continuous"
 type="postgresql-to-postgresql"
 
 [Extract]
-source = "postgress"
+conn_id = "postgress"
+type="postgres"
 
 [Load]
 destination = "redshift"

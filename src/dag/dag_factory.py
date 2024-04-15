@@ -19,6 +19,7 @@ class DAGFactory:
 
     @staticmethod
     def create_extract(config: Dict) -> Extract:
+        print("[Config]",config)
         return ExtractFactory.create(extract_type=config.get("type"))
 
     @staticmethod
@@ -44,7 +45,7 @@ class DAGFactory:
             data = toml.loads(file.read())
 
         dag: DAG = factory.create_dag(data.get("DAG", {}))
-        extract: Extract = factory.create_extract(data.get("Extract", {}))
+        extract: Extract = factory.create_extract(data.get("Extract"))
         load: Load = factory.create_load(data.get("Load", {}))
 
         dag_description_builder = DAGDescriptionBuilder()

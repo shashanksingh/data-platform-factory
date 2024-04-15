@@ -24,16 +24,22 @@ class ExtractFactoryMeta(type):
 
     @classmethod
     def create(cls, extract_type):
+        print("[registry]", cls._registry)
         extract_class = cls._registry.get(extract_type.lower())
         if extract_class:
             return extract_class()
         else:
-            raise ValueError(f"Unknown shape type: {extract_type}")
+            raise ValueError(f"Unknown Extract Type: {extract_type}")
 
     @classmethod
     def register_child(cls, extract_child_name: str, extract_child_class: Any) -> None:
+        print("[register_child]", extract_child_name)
         cls._registry[extract_child_name] = extract_child_class
 
 
 class ExtractFactory(metaclass=ExtractFactoryMeta):
     pass
+
+# some sort of autoloader
+
+
