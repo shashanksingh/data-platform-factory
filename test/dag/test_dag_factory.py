@@ -6,6 +6,7 @@ from src.dag.dag import DAG
 from src.dag.dag_description import DAGDescription
 from src.dag.dag_factory import DAGFactory
 from src.extract.extract import Extract
+from src.extract.postgres import Postgres
 from src.load.load import Load
 from src.report.report import Report
 from src.transform.transform import Transform
@@ -16,79 +17,94 @@ from src.wait.wait import Wait
     "mock_file_content,expected_object",
     [
         (
-            """
+                """
                 [DAG]
                 type="rdbms-to-dwh"
                 [Extract]
-                name = "postgres"
+                conn_id = "transactions_default"
+                type="postgres"
+                database_name="database"
+                table_name="table"
                 [Load]
                 destination = "redshift"
 
         """,
-            DAGDescription(
-                dag=DAG(type="rdbms-to-dwh"),
-                extract=Extract(source="postgres"),
-                load=Load(destination="redshift"),
-            ),
+                DAGDescription(
+                    dag=DAG(type="rdbms-to-dwh"),
+                    extract=Postgres(conn_id="transactions_default"),
+                    load=Load(destination="redshift"),
+                ),
         ),
         (
-            """
+                """
                 [DAG]
                 type="rdbms-to-dwh"
                 [Extract]
-                name="postgres"
+                conn_id = "transactions_default"
+                type="postgres"
+                database_name="database"
+                table_name="table"
                 [Wait]
                 after_source="catalog.table"
                 [Load]
                 destination="redshift"
             """,
-            DAGDescription(
-                dag=DAG(type="rdbms-to-dwh"),
-                extract=Extract(source="postgres"),
-                load=Load(destination="redshift"),
-                wait=Wait(after_source="catalog.table"),
-            ),
+                DAGDescription(
+                    dag=DAG(type="rdbms-to-dwh"),
+                    extract=Postgres(conn_id="transactions_default"),
+                    load=Load(destination="redshift"),
+                    wait=Wait(after_source="catalog.table"),
+                ),
         ),
         (
-            """
+                """
                 [DAG]
                 type="rdbms-to-dwh"
                 [Extract]
-                name="postgres"
+                conn_id = "transactions_default"
+                type="postgres"
+                database_name="database"
+                table_name="table"
                 [Load]
                 destination="redshift"
                 [Report]
                 name="slack"
             """,
-            DAGDescription(
-                dag=DAG(type="rdbms-to-dwh"),
-                extract=Extract(source="postgres"),
-                load=Load(destination="redshift"),
-                report=Report(source="slack"),
-            ),
+                DAGDescription(
+                    dag=DAG(type="rdbms-to-dwh"),
+                    extract=Postgres(conn_id="transactions_default"),
+                    load=Load(destination="redshift"),
+                    report=Report(source="slack"),
+                ),
         ),
         (
-            """[DAG]
+                """ [DAG]
                 type="rdbms-to-dwh"
                 [Extract]
-                name="postgres"
+                conn_id = "transactions_default"
+                type="postgres"
+                database_name="database"
+                table_name="table"
                 [Load]
                 destination="redshift"
                 [Transform]
                 name="dedup"
             """,
-            DAGDescription(
-                dag=DAG(type="rdbms-to-dwh"),
-                extract=Extract(source="postgres"),
-                load=Load(destination="redshift"),
-                transforms=Transform(name="dedup"),
-            ),
+                DAGDescription(
+                    dag=DAG(type="rdbms-to-dwh"),
+                    extract=Postgres(conn_id="transactions_default"),
+                    load=Load(destination="redshift"),
+                    transforms=Transform(name="dedup"),
+                ),
         ),
         (
-            """[DAG]
-                type="rdbms-to-dwh"
+                """[DAG]
+                    type="rdbms-to-dwh"
                     [Extract]
-                    name="postgres"
+                    conn_id = "transactions_default"
+                    type="postgres"
+                    database_name="database"
+                    table_name="table"
                     [Wait]
                     after_source="catalog.table"
                     [Load]
@@ -96,13 +112,13 @@ from src.wait.wait import Wait
                     [Transform]
                     name="dedup"
                 """,
-            DAGDescription(
-                dag=DAG(type="rdbms-to-dwh"),
-                extract=Extract(source="postgres"),
-                wait=Wait(after_source="catalog.table"),
-                load=Load(destination="redshift"),
-                transforms=Transform(name="dedup"),
-            ),
+                DAGDescription(
+                    dag=DAG(type="rdbms-to-dwh"),
+                    extract=Postgres(conn_id="transactions_default"),
+                    wait=Wait(after_source="catalog.table"),
+                    load=Load(destination="redshift"),
+                    transforms=Transform(name="dedup"),
+                ),
         ),
     ],
     ids=[
@@ -115,9 +131,9 @@ from src.wait.wait import Wait
 )
 def test_dag_factory(mock_file_content, expected_object):
     with unittest.mock.patch(
-        "builtins.open",
-        new=unittest.mock.mock_open(read_data=mock_file_content),
-        create=True,
+            "builtins.open",
+            new=unittest.mock.mock_open(read_data=mock_file_content),
+            create=True,
     ) as file_mock:
         # given-when
         dag_factory = DAGFactory.read_etl_description(file_path="/dev/null")

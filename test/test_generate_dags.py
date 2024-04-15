@@ -13,7 +13,10 @@ from click.testing import CliRunner
             [DAG]
             type="rdbms-to-dwh"
             [Extract]
-            name="postgres"
+            conn_id = "transactions_default"
+            type="postgres"
+            database_name="database"
+            table_name="table"
             [Load]
             destination="redshift"
         """,
