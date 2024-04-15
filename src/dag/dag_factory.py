@@ -4,7 +4,7 @@ import toml
 
 from src.dag.dag import DAG
 from src.dag.dag_description import DAGDescription
-from src.extract.extract import Extract
+from src.extract.extract import ExtractFactory, Extract
 from src.dag.dag_description_builder import DAGDescriptionBuilder
 from src.load.load import Load
 from src.report.report import Report
@@ -19,7 +19,7 @@ class DAGFactory:
 
     @staticmethod
     def create_extract(config: Dict) -> Extract:
-        return Extract(**config)
+        return ExtractFactory.create(extract_type=config.get("type"))
 
     @staticmethod
     def create_load(config: Dict) -> Load:

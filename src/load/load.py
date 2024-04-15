@@ -1,5 +1,4 @@
 from pydantic import BaseModel, ConfigDict
-import abc
 
 
 class Load(BaseModel):
@@ -7,10 +6,10 @@ class Load(BaseModel):
 
     destination: str
 
-    @property
-    @abc.abstractmethod
-    def template(self):
-        """The template for the extract"""
+    # @property
+    # @abc.abstractmethod
+    # def template(self):
+    #     """The template for the extract"""
 
     def __str__(self):
         return self.destination
