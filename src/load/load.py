@@ -10,7 +10,7 @@ class Load(BaseModel):
     @property
     @abc.abstractmethod
     def template(self):
-        """ The template for the extract"""
+        """The template for the extract"""
 
     def __str__(self):
         return self.destination

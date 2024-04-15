@@ -20,7 +20,7 @@ from src.wait.wait import Wait
                 [DAG]
                 type="postgresql-to-postgresql"
                 [Extract]
-                source = "postgres"
+                name = "postgres"
                 [Load]
                 destination = "redshift"
 
@@ -36,7 +36,7 @@ from src.wait.wait import Wait
                 [DAG]
                 type="postgresql-to-postgresql"
                 [Extract]
-                source="postgres"
+                name="postgres"
                 [Wait]
                 after_source="catalog.table"
                 [Load]
@@ -54,11 +54,11 @@ from src.wait.wait import Wait
                 [DAG]
                 type="postgresql-to-postgresql"
                 [Extract]
-                source="postgres"
+                name="postgres"
                 [Load]
                 destination="redshift"
                 [Report]
-                source="slack"
+                name="slack"
             """,
             DAGDescription(
                 dag=DAG(type="postgresql-to-postgresql"),
@@ -71,7 +71,7 @@ from src.wait.wait import Wait
             """[DAG]
                 type="postgresql-to-postgresql"
                 [Extract]
-                source="postgres"
+                name="postgres"
                 [Load]
                 destination="redshift"
                 [Transform]
@@ -88,7 +88,7 @@ from src.wait.wait import Wait
             """[DAG]
                 type="postgresql-to-postgresql"
                     [Extract]
-                    source="postgres"
+                    name="postgres"
                     [Wait]
                     after_source="catalog.table"
                     [Load]
