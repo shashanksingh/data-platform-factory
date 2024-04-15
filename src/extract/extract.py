@@ -4,16 +4,13 @@ from pydantic import ConfigDict
 
 from src.common.base_dag_factory_model import BaseDAGFactoryModel
 
-EXTRACT_TYPE: Dict = {}
-
 
 class Extract(BaseDAGFactoryModel):
     model_config = ConfigDict(extra="forbid")
-    name: str
     conn_id: str
 
     def __str__(self):
-        return self.name
+        return self.conn_id
 
 
 class ExtractFactoryMeta(type):
