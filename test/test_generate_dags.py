@@ -11,13 +11,17 @@ from click.testing import CliRunner
         (
             """
             [DAG]
+            schedule = "@continuous"
             type="rdbms-to-dwh"
+            
             [Extract]
             conn_id = "transactions_default"
             type="postgres"
             database_name="database"
             table_name="table"
+            
             [Load]
+            conn_id = "transactions_dwh_default"
             type="redshift"
             database_name="database"
             table_name="table"

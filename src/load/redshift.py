@@ -8,7 +8,7 @@ class Redshift(Load):
     database_name: str
     table_name: str
     sync_type: str = "FULL"
-    type: str = "postgres"
+    type: str = "redshift"
 
     @computed_field(return_type="str")
     def s3_bucket(self) -> str:

@@ -19,7 +19,7 @@ class LoadFactoryMeta(type):
         if load_class:
             return load_class(**config)
         else:
-            raise ValueError(f"Unknown Extract Type: {load_type}")
+            raise ValueError(f"Unknown Load Type: {load_type}")
 
     @classmethod
     def register_child(cls, load_child_name: str, load_child_class: Any) -> None:

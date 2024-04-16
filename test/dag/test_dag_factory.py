@@ -39,7 +39,9 @@ from src.wait.wait import Wait
                     table_name="table",
                 ),
                 load=Redshift(
-                    conn_id="redshift", database_name="database", table_name="table"
+                    conn_id="transactions_dwh_default",
+                    database_name="database",
+                    table_name="table",
                 ),
             ),
         ),
@@ -68,7 +70,9 @@ from src.wait.wait import Wait
                     table_name="table",
                 ),
                 load=Redshift(
-                    conn_id="redshift", database_name="database", table_name="table"
+                    conn_id="transactions_dwh_default",
+                    database_name="database",
+                    table_name="table",
                 ),
                 wait=Wait(after_source="catalog.table"),
             ),
@@ -98,7 +102,9 @@ from src.wait.wait import Wait
                     table_name="table",
                 ),
                 load=Redshift(
-                    conn_id="redshift", database_name="database", table_name="table"
+                    conn_id="transactions_dwh_default",
+                    database_name="database",
+                    table_name="table",
                 ),
                 report=Report(source="slack"),
             ),
@@ -127,7 +133,9 @@ from src.wait.wait import Wait
                     table_name="table",
                 ),
                 load=Redshift(
-                    conn_id="redshift", database_name="database", table_name="table"
+                    conn_id="transactions_dwh_default",
+                    database_name="database",
+                    table_name="table",
                 ),
                 transforms=Transform(name="dedup"),
             ),
@@ -159,7 +167,9 @@ from src.wait.wait import Wait
                 ),
                 wait=Wait(after_source="catalog.table"),
                 load=Redshift(
-                    conn_id="redshift", database_name="database", table_name="table"
+                    conn_id="transactions_dwh_default",
+                    database_name="database",
+                    table_name="table",
                 ),
                 transforms=Transform(name="dedup"),
             ),
