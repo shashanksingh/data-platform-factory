@@ -1,8 +1,0 @@
-[DAG]
-schedule = "@continuous"
-
-[Extract]
-source = "postgress"
-
-[Load]
-destination = "redshift"

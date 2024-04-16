@@ -6,6 +6,7 @@ from src.dag.dag import DAG
 from src.dag.dag_description import DAGDescription
 from src.extract.extract import Extract
 from src.dag.dag_description_builder import DAGDescriptionBuilder
+from src.extract.extract_factory import ExtractFactory
 from src.load.load import Load
 from src.report.report import Report
 from src.transform.transform import Transform
@@ -19,7 +20,8 @@ class DAGFactory:
 
     @staticmethod
     def create_extract(config: Dict) -> Extract:
-        return Extract(**config)
+        ExtractFactory.auto_register_classes()
+        return ExtractFactory.create(extract_type=config.get("type"), **config)
 
     @staticmethod
     def create_load(config: Dict) -> Load:
@@ -63,5 +65,9 @@ class DAGFactory:
         env = Environment(loader=FileSystemLoader("src/templates"))
         template = env.get_template("base.py.jinja")
 
-        output = template.render(dag_description=dag_description.dict())
+        output = template.render(dag_description=dag_description.convert_to_dict())
         return output
+
+    @staticmethod
+    def generate_dag_name(dag_description: DAGDescription) -> str:
+        return f"load_from_{str(dag_description.extract)}_to_{str(dag_description.load.destination)}"
