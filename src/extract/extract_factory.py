@@ -32,7 +32,7 @@ class ExtractFactoryMeta(type):
             if (
                 file_name.endswith(".py")
                 and file_name != "__init__.py"
-                and file_name != "shape_factory.py"
+                and file_name != "extract_factory.py"
             ):
                 # module_name = file_name[:-3]  # Remove '.py' extension
                 # TODO

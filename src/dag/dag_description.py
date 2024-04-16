@@ -25,7 +25,7 @@ class DAGDescription(BaseModel):
         """
         TODO
         model_dump should have recursively done this, but it didnt so this is bit of hack
-        description :
+        description : https://docs.pydantic.dev/latest/concepts/serialization/
         :return: Dict representation of models
         """
         return {
