@@ -4,7 +4,7 @@ from __future__ import annotations
 import pendulum
 from airflow.models.dag import DAG
 
-
+{{ dag_description }}
 dag = DAG(
     dag_id="{{ dag_description.extract.source }}_to_{{ dag_description.load.destination }}",
     start_date=pendulum.datetime(2021, 1, 1, tz="UTC"),
@@ -14,7 +14,7 @@ dag = DAG(
 )
 {% if 'extract' in dag_description %}
    # extract
-   {% include 'extract.py.jinja' %}
+   {% include 'extract/extract_base.py.jinja' %}
 {% endif %}
 
 {% if 'load' in dag_description %}

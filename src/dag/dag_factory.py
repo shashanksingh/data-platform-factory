@@ -49,6 +49,7 @@ class DAGFactory:
         extract: Extract = factory.create_extract(data.get("Extract", {}))
         load: Load = factory.create_load(data.get("Load", {}))
 
+        print("[EXTRAC]", data, data.get("Extract"), type(extract), extract.database_name, extract.template)
         dag_description_builder = DAGDescriptionBuilder()
         (dag_description_builder.with_dag(dag).with_extract(extract).with_load(load))
 
