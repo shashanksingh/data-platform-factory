@@ -6,7 +6,7 @@ from src.dag.dag import DAG
 from src.dag.dag_description import DAGDescription
 from src.dag.dag_factory import DAGFactory
 from src.extract.postgres import Postgres
-from src.load.load import Load
+from src.load.redshift import Redshift
 from src.report.report import Report
 from src.transform.transform import Transform
 from src.wait.wait import Wait
@@ -25,7 +25,10 @@ from src.wait.wait import Wait
                 database_name="database"
                 table_name="table"
                 [Load]
-                destination = "redshift"
+                conn_id = "transactions_dwh_default"
+                type="redshift"
+                database_name="database"
+                table_name="table"
 
         """,
             DAGDescription(
@@ -35,7 +38,9 @@ from src.wait.wait import Wait
                     database_name="database",
                     table_name="table",
                 ),
-                load=Load(destination="redshift"),
+                load=Redshift(
+                    conn_id="redshift", database_name="database", table_name="table"
+                ),
             ),
         ),
         (
@@ -50,7 +55,10 @@ from src.wait.wait import Wait
                 [Wait]
                 after_source="catalog.table"
                 [Load]
-                destination="redshift"
+                conn_id = "transactions_dwh_default"
+                type="redshift"
+                database_name="database"
+                table_name="table"
             """,
             DAGDescription(
                 dag=DAG(type="rdbms-to-dwh"),
@@ -59,7 +67,9 @@ from src.wait.wait import Wait
                     database_name="database",
                     table_name="table",
                 ),
-                load=Load(destination="redshift"),
+                load=Redshift(
+                    conn_id="redshift", database_name="database", table_name="table"
+                ),
                 wait=Wait(after_source="catalog.table"),
             ),
         ),
@@ -73,7 +83,10 @@ from src.wait.wait import Wait
                 database_name="database"
                 table_name="table"
                 [Load]
-                destination="redshift"
+                conn_id = "transactions_dwh_default"
+                type="redshift"
+                database_name="database"
+                table_name="table"
                 [Report]
                 source="slack"
             """,
@@ -84,7 +97,9 @@ from src.wait.wait import Wait
                     database_name="database",
                     table_name="table",
                 ),
-                load=Load(destination="redshift"),
+                load=Redshift(
+                    conn_id="redshift", database_name="database", table_name="table"
+                ),
                 report=Report(source="slack"),
             ),
         ),
@@ -97,7 +112,10 @@ from src.wait.wait import Wait
                 database_name="database"
                 table_name="table"
                 [Load]
-                destination="redshift"
+                conn_id = "transactions_dwh_default"
+                type="redshift"
+                database_name="database"
+                table_name="table"
                 [Transform]
                 name="dedup"
             """,
@@ -108,7 +126,9 @@ from src.wait.wait import Wait
                     database_name="database",
                     table_name="table",
                 ),
-                load=Load(destination="redshift"),
+                load=Redshift(
+                    conn_id="redshift", database_name="database", table_name="table"
+                ),
                 transforms=Transform(name="dedup"),
             ),
         ),
@@ -123,7 +143,10 @@ from src.wait.wait import Wait
                     [Wait]
                     after_source="catalog.table"
                     [Load]
-                    destination="redshift"
+                    conn_id = "transactions_dwh_default"
+                    type="redshift"
+                    database_name="database"
+                    table_name="table"
                     [Transform]
                     name="dedup"
                 """,
@@ -135,7 +158,9 @@ from src.wait.wait import Wait
                     table_name="table",
                 ),
                 wait=Wait(after_source="catalog.table"),
-                load=Load(destination="redshift"),
+                load=Redshift(
+                    conn_id="redshift", database_name="database", table_name="table"
+                ),
                 transforms=Transform(name="dedup"),
             ),
         ),

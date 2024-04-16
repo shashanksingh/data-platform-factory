@@ -72,4 +72,6 @@ class DAGFactory:
 
     @staticmethod
     def generate_dag_name(dag_description: DAGDescription) -> str:
-        return f"load_from_{str(dag_description.extract)}_to_{str(dag_description.load)}"
+        return (
+            f"load_from_{str(dag_description.extract)}_to_{str(dag_description.load)}"
+        )

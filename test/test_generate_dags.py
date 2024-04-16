@@ -18,7 +18,9 @@ from click.testing import CliRunner
             database_name="database"
             table_name="table"
             [Load]
-            destination="redshift"
+            type="redshift"
+            database_name="database"
+            table_name="table"
         """,
             """Hello definitions/!!\n""",
         ),
