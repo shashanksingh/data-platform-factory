@@ -13,7 +13,7 @@ dag = DAG(
 )
 {% if 'extract' in dag_description %}
    # extract
-   {% include 'extract/extract_base.py.jinja' %}
+   {% include 'extract/base.py.jinja' %}
 {% endif %}
 
 {% if 'load' in dag_description %}
