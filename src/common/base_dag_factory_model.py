@@ -10,11 +10,3 @@ class BaseDAGFactoryModel(BaseModel):
     @abstractmethod
     def template(self):
         """The template"""
-
-    def to_dict(self):
-        # Method to include computed field in dictionary representation
-        print("[based]", self.__dict__)
-        return {
-            **self.dict(),
-            "template": self.template()
-        }

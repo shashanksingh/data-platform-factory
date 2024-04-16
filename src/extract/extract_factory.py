@@ -34,7 +34,7 @@ class ExtractFactoryMeta(type):
                 and file_name != "__init__.py"
                 and file_name != "shape_factory.py"
             ):
-                module_name = file_name[:-3]  # Remove '.py' extension
+                # module_name = file_name[:-3]  # Remove '.py' extension
                 # TODO
                 # module = __import__(module_name)
                 # for name, obj in inspect.getmembers(module):

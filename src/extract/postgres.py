@@ -10,7 +10,6 @@ class Postgres(Extract):
     type: str = "postgres"
 
     @computed_field(return_type=str)
-    @property
     def template(self):
         return f"""PostgresOperator(
             task_id="extract_{self.database_name}_{self.table_name}",

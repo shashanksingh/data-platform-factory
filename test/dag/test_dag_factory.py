@@ -16,7 +16,7 @@ from src.wait.wait import Wait
     "mock_file_content,expected_object",
     [
         (
-                """
+            """
                 [DAG]
                 type="rdbms-to-dwh"
                 [Extract]
@@ -28,14 +28,18 @@ from src.wait.wait import Wait
                 destination = "redshift"
 
         """,
-                DAGDescription(
-                    dag=DAG(type="rdbms-to-dwh"),
-                    extract=Postgres(conn_id="transactions_default", database_name="database", table_name="table"),
-                    load=Load(destination="redshift"),
+            DAGDescription(
+                dag=DAG(type="rdbms-to-dwh"),
+                extract=Postgres(
+                    conn_id="transactions_default",
+                    database_name="database",
+                    table_name="table",
                 ),
+                load=Load(destination="redshift"),
+            ),
         ),
         (
-                """
+            """
                 [DAG]
                 type="rdbms-to-dwh"
                 [Extract]
@@ -48,15 +52,19 @@ from src.wait.wait import Wait
                 [Load]
                 destination="redshift"
             """,
-                DAGDescription(
-                    dag=DAG(type="rdbms-to-dwh"),
-                    extract=Postgres(conn_id="transactions_default", database_name="database", table_name="table"),
-                    load=Load(destination="redshift"),
-                    wait=Wait(after_source="catalog.table"),
+            DAGDescription(
+                dag=DAG(type="rdbms-to-dwh"),
+                extract=Postgres(
+                    conn_id="transactions_default",
+                    database_name="database",
+                    table_name="table",
                 ),
+                load=Load(destination="redshift"),
+                wait=Wait(after_source="catalog.table"),
+            ),
         ),
         (
-                """
+            """
                 [DAG]
                 type="rdbms-to-dwh"
                 [Extract]
@@ -69,15 +77,19 @@ from src.wait.wait import Wait
                 [Report]
                 source="slack"
             """,
-                DAGDescription(
-                    dag=DAG(type="rdbms-to-dwh"),
-                    extract=Postgres(conn_id="transactions_default", database_name="database", table_name="table"),
-                    load=Load(destination="redshift"),
-                    report=Report(source="slack"),
+            DAGDescription(
+                dag=DAG(type="rdbms-to-dwh"),
+                extract=Postgres(
+                    conn_id="transactions_default",
+                    database_name="database",
+                    table_name="table",
                 ),
+                load=Load(destination="redshift"),
+                report=Report(source="slack"),
+            ),
         ),
         (
-                """ [DAG]
+            """ [DAG]
                 type="rdbms-to-dwh"
                 [Extract]
                 conn_id = "transactions_default"
@@ -89,15 +101,19 @@ from src.wait.wait import Wait
                 [Transform]
                 name="dedup"
             """,
-                DAGDescription(
-                    dag=DAG(type="rdbms-to-dwh"),
-                    extract=Postgres(conn_id="transactions_default", database_name="database", table_name="table"),
-                    load=Load(destination="redshift"),
-                    transforms=Transform(name="dedup"),
+            DAGDescription(
+                dag=DAG(type="rdbms-to-dwh"),
+                extract=Postgres(
+                    conn_id="transactions_default",
+                    database_name="database",
+                    table_name="table",
                 ),
+                load=Load(destination="redshift"),
+                transforms=Transform(name="dedup"),
+            ),
         ),
         (
-                """[DAG]
+            """[DAG]
                     type="rdbms-to-dwh"
                     [Extract]
                     conn_id = "transactions_default"
@@ -111,13 +127,17 @@ from src.wait.wait import Wait
                     [Transform]
                     name="dedup"
                 """,
-                DAGDescription(
-                    dag=DAG(type="rdbms-to-dwh"),
-                    extract=Postgres(conn_id="transactions_default", database_name="database", table_name="table"),
-                    wait=Wait(after_source="catalog.table"),
-                    load=Load(destination="redshift"),
-                    transforms=Transform(name="dedup"),
+            DAGDescription(
+                dag=DAG(type="rdbms-to-dwh"),
+                extract=Postgres(
+                    conn_id="transactions_default",
+                    database_name="database",
+                    table_name="table",
                 ),
+                wait=Wait(after_source="catalog.table"),
+                load=Load(destination="redshift"),
+                transforms=Transform(name="dedup"),
+            ),
         ),
     ],
     ids=[
@@ -130,9 +150,9 @@ from src.wait.wait import Wait
 )
 def test_dag_factory(mock_file_content, expected_object):
     with unittest.mock.patch(
-            "builtins.open",
-            new=unittest.mock.mock_open(read_data=mock_file_content),
-            create=True,
+        "builtins.open",
+        new=unittest.mock.mock_open(read_data=mock_file_content),
+        create=True,
     ) as file_mock:
         # given-when
         dag_factory = DAGFactory.read_etl_description(file_path="/dev/null")
