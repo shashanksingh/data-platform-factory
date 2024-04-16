@@ -2,6 +2,9 @@
 
 setup:
 	python3 -m pip install --upgrade pip
+	brew install astro
+
+
 
 install:
 	python3 -m pip install -r src/requirements.txt
@@ -24,7 +27,7 @@ unittest-verbose:
 
 
 toml_sort:
-	toml-sort  definitions/*.toml  --all --in-place
+	toml-sort  definitions/**/*.toml  --all --in-place
 
 isort:
 	python3 -m  isort .
