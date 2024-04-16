@@ -29,3 +29,6 @@ class Redshift(Load):
             f"        )\n"
             f"    "
         )
+
+    def __str__(self):
+        return f"{self.conn_id}_{self.database_name}_{self.table_name}"

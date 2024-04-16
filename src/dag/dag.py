@@ -1,5 +1,5 @@
 from typing import Optional, List
-from pydantic import BaseModel, ConfigDict, field_validator
+from pydantic import BaseModel, ConfigDict, field_validator, computed_field
 
 AIRFLOW_VALID_SCHEDULE_STRINGS = {
     "@continuous",
@@ -19,8 +19,16 @@ class DAG(BaseModel):
     type: str
     start_date: Optional[str] = None
     catchup: Optional[bool] = False
-    tags: Optional[List[str]] = ["example"]
+    custom_tags: Optional[List[str]] = ["generated-dags"]
     schedule: Optional[str] = "@daily"
+
+    @computed_field(return_type=List[str])
+    def tags(self):
+        """
+        In case custom tags are specified they are used to calculate tags
+        :return: List of tags
+        """
+        return self.custom_tags
 
     @field_validator("schedule")
     @classmethod

@@ -5,7 +5,7 @@ import pendulum
 from airflow.models.dag import DAG
 
 dag = DAG(
-    dag_id="{{ dag_description.extract.conn_id }}_to_{{ dag_description.load.destination }}",
+    dag_id="{{ dag_description.extract.conn_id }}_to_{{ dag_description.load.conn_id }}",
     start_date=pendulum.datetime(2021, 1, 1, tz="UTC"),
     catchup={{dag_description.dag.catchup}},
     tags={{ dag_description.dag.tags }},
