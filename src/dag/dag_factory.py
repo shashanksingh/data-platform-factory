@@ -8,6 +8,7 @@ from src.extract.extract import Extract
 from src.dag.dag_description_builder import DAGDescriptionBuilder
 from src.extract.extract_factory import ExtractFactory
 from src.load.load import Load
+from src.load.load_factory import LoadFactory
 from src.report.report import Report
 from src.transform.transform import Transform
 from src.wait.wait import Wait
@@ -25,7 +26,8 @@ class DAGFactory:
 
     @staticmethod
     def create_load(config: Dict) -> Load:
-        return Load(**config)
+        LoadFactory.auto_register_classes()
+        return LoadFactory.create(load_type=config.get("type"), **config)
 
     @staticmethod
     def create_transform(configs: Dict) -> Transform:
@@ -70,4 +72,4 @@ class DAGFactory:
 
     @staticmethod
     def generate_dag_name(dag_description: DAGDescription) -> str:
-        return f"load_from_{str(dag_description.extract)}_to_{str(dag_description.load.destination)}"
+        return f"load_from_{str(dag_description.extract)}_to_{str(dag_description.load)}"

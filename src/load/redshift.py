@@ -1,6 +1,6 @@
-from typing import Optional
 from pydantic import computed_field
-from src.extract.load import Load
+
+from src.load.load import Load
 
 
 class Redshift(Load):
