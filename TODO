@@ -12,3 +12,17 @@
 
 
 7. eventually subdirectory should automatically be added to tag name
+8. test needed to be added for airflow code genrated
+
+9. one source, multi source, no source -> single destination
+10. FOllow https://lakefs.io/blog/data-engineering-patterns-write-audit-publish/ WAP pattern
+
+
+Design Guidelines
+1. Data Factory to generate ETL pipeline
+2. Simple to understand Metadata / TOML
+3. WAP -> write audit publish pattern
+4. Blue green deployment
+5. unit, integrartion tests
+6. Open Source , but Vendor Managed whereever possible
+7. Dataset Driven scheduling or Time based

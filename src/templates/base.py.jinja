@@ -18,7 +18,7 @@ dag = DAG(
 
 {% if 'load' in dag_description %}
    # load
-   {% include 'load.py.jinja' %}
+   {% include 'load/base.py.jinja' %}
 {% endif %}
 
 {% if 'wait' in dag_description and dag_description.get("wait") %}

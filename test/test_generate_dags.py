@@ -11,6 +11,7 @@ from click.testing import CliRunner
         (
             """
             [DAG]
+            schedule = "@continuous"
             type="rdbms-to-dwh"
             [Extract]
             conn_id = "transactions_default"
@@ -18,7 +19,10 @@ from click.testing import CliRunner
             database_name="database"
             table_name="table"
             [Load]
-            destination="redshift"
+            conn_id = "transactions_dwh_default"
+            type="redshift"
+            database_name="database"
+            table_name="table"
         """,
             """Hello definitions/!!\n""",
         ),

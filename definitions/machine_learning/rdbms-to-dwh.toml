@@ -9,4 +9,7 @@ database_name="database"
 table_name="table"
 
 [Load]
-destination = "redshift"
+conn_id = "transactions_dwh_default"
+type="redshift"
+database_name="database"
+table_name="table"
