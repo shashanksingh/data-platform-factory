@@ -29,10 +29,11 @@ class DAGDescription(BaseModel):
         :return: Dict representation of models
         """
         return {
-            "dag": self.model_dump(),
+            "dag": self.model_dump().get("dag"),
             "extract": self.extract.model_dump(),
             "transforms": self.transforms.model_dump() if self.transforms else None,
             "load": self.load.model_dump(),
             "report": self.report.model_dump() if self.report else None,
             "wait": self.wait.model_dump() if self.wait else None,
+            "toml": self.model_dump(),
         }

@@ -14,3 +14,5 @@ with TaskGroup(group_id="extract") as extract:
         op_kwargs={"params": {"destination": "{destination}"}},
         dag=dag,
     )
+
+    {{ dag_description.extract.template }}
