@@ -1,18 +1,15 @@
-# type: ignore
-# flake8: noqa
-from airflow.utils.task_group import TaskGroup
 from airflow.operators.python import PythonOperator
 
-with TaskGroup(group_id="load") as extract:
 
-    def load_task(**kwargs):
-        print(f"loading data into destination")
 
-    load_task = PythonOperator(
-        task_id="load_task",
-        python_callable=load_task,
-        op_kwargs={"params": {"destination": "{destination}"}},
-        dag=dag,
-    )
+def load_task(**kwargs):
+    print(f"loading data into destination")
 
-    {{ dag_description.load.template }}
+load_task = PythonOperator(
+    task_id="load_task",
+    python_callable=load_task,
+    op_kwargs={"params": {"destination": "{destination}"}},
+    dag=dag,
+)
+
+{{ dag_description.load.template }}

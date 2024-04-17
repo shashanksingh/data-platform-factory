@@ -3,38 +3,40 @@
 from __future__ import annotations
 import pendulum
 from airflow.models.dag import DAG
+from airflow.utils.task_group import TaskGroup
 
-dag = DAG(
+with DAG(
     dag_id="{{ dag_description.extract.conn_id }}_to_{{ dag_description.load.conn_id }}",
     start_date=pendulum.datetime(2021, 1, 1, tz="UTC"),
     catchup={{dag_description.dag.catchup}},
     tags={{ dag_description.dag.tags }},
     schedule="{{ dag_description.dag.schedule }}",
-)
-{% if 'extract' in dag_description %}
-   # extract
-   {% include 'extract/base.py.jinja' %}
-{% endif %}
+) as dag:
+    with TaskGroup(group_id="extract") as extract:
+    {% filter indent(width=8) %}
+       {% include 'extract/base.py.jinja' %}
+    {% endfilter %}
 
-{% if 'load' in dag_description %}
-   # load
-   {% include 'load/base.py.jinja' %}
-{% endif %}
+    with TaskGroup(group_id="load") as load:
+    {% filter indent(width=8) %}
+       {% include 'load/base.py.jinja' %}
+     {% endfilter %}
 
-{% if 'wait' in dag_description and dag_description.get("wait") %}
-   # wait
-   {% include 'wait.py.jinja' %}
-{% endif %}
+{#    {% if 'wait' in dag_description and dag_description.get("wait") %}#}
+{#       {% include 'wait.py.jinja' %}#}
+{#    {% endif %}#}
 
-{% if 'report' in dag_description and dag_description.get("report") %}
-   # report
-   {% include 'report.py.jinja' %}
-{% endif %}
+    {% if 'report' in dag_description and dag_description.get("report") %}
+        with TaskGroup(group_id="report") as report:
+            {% include 'report.py.jinja' %}
+        load >> report
+    {% endif %}
 
-{% if 'transform' in dag_description and dag_description.get("transform") %}
-   # transform
-   {% include 'transform.py.jinja' %}
-{% endif %}
+    {% if 'transform' in dag_description and dag_description.get("transform") %}
+        with TaskGroup(group_id="transform") as transform:
+            {% include 'transform.py.jinja' %}
+        extract >> transform >> load
+    {% else %}
+        extract >> load
+    {% endif %}
 
-# extract >> wait>> transform >> wait >> load
-# [END howto_branch_datetime_operator]
