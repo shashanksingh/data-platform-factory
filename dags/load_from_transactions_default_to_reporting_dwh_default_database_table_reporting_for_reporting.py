@@ -11,7 +11,9 @@ with DAG(
     catchup=False,
     tags=['generated-dags'],
     schedule="@continuous",
+    max_active_runs=1,
 ) as dag:
+
 
     with TaskGroup(group_id="extract") as extract:
         from airflow.operators.python import PythonOperator
@@ -31,6 +33,7 @@ with DAG(
                     task_id="extract_{self.database_name}_{self.table_name}",
                     sql="SELECT * from {self.database_name}.{self.table_name};",
                 )
+
 
 
     with TaskGroup(group_id="load") as load:

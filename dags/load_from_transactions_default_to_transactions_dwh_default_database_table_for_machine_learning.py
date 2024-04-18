@@ -11,9 +11,11 @@ with DAG(
     catchup=False,
     tags=['generated-dags'],
     schedule="@continuous",
+    max_active_runs=1,
 ) as dag:
 
-with TaskGroup(group_id="extract") as extract:
+
+    with TaskGroup(group_id="extract") as extract:
         from airflow.operators.python import PythonOperator
 
 
@@ -33,7 +35,8 @@ with TaskGroup(group_id="extract") as extract:
                 )
 
 
-with TaskGroup(group_id="load") as load:
+
+    with TaskGroup(group_id="load") as load:
         from airflow.operators.python import PythonOperator
 
 

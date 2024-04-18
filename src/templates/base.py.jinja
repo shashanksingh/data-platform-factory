@@ -14,7 +14,7 @@ with DAG(
     max_active_runs={{ dag_description.dag.max_active_runs }},
 ) as dag:
 
-{% filter indent(width=4) -%}
+{% filter indent(width=4) %}
 with TaskGroup(group_id="extract") as extract:
 {%- endfilter -%}
 
@@ -22,7 +22,7 @@ with TaskGroup(group_id="extract") as extract:
 {% include 'extract/base.py.jinja' %}
 {% endfilter %}
 
-{% filter indent(width=4) -%}
+{% filter indent(width=4) %}
 with TaskGroup(group_id="load") as load:
 {%- endfilter -%}
 {% filter indent(width=8) %}
