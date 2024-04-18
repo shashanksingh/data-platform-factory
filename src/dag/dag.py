@@ -21,6 +21,7 @@ class DAG(BaseModel):
     catchup: Optional[bool] = False
     custom_tags: Optional[List[str]] = ["generated-dags"]
     schedule: Optional[str] = "@daily"
+    max_active_runs: int = 1
 
     @computed_field(return_type=List[str])
     def tags(self):

@@ -11,6 +11,7 @@ with DAG(
     catchup={{dag_description.dag.catchup}},
     tags={{ dag_description.dag.tags }},
     schedule="{{ dag_description.dag.schedule }}",
+    max_active_runs={{ dag_description.dag.max_active_runs }},
 ) as dag:
 
 {% filter indent(width=4) -%}
@@ -32,11 +33,14 @@ with TaskGroup(group_id="load") as load:
 {#       {% include 'wait.py.jinja' %}#}
 {#    {% endif %}#}
 
-    {% if 'report' in dag_description and dag_description.get("report") %}
+{% if 'report' in dag_description and dag_description.get("report") %}
+{% filter indent(width=8) %}
 with TaskGroup(group_id="report") as report:
+{% endfilter %}
+
 {% include 'report.py.jinja' %}
 load >> report
-    {% endif %}
+{% endif %}
 
 {% if 'transform' in dag_description and dag_description.get("transform") %}
 
@@ -49,9 +53,12 @@ with TaskGroup(group_id="transform") as transform:
 {% filter indent(width=8) %}
 extract >> transform >> load
 {% endfilter %}
+
 {% else %}
+
 {% filter indent(width=8) %}
 extract >> load
 {% endfilter %}
+
 {% endif %}
 

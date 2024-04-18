@@ -6,14 +6,14 @@ from airflow.models.dag import DAG
 from airflow.utils.task_group import TaskGroup
 
 with DAG(
-    dag_id="transactions_default_to_reporting_dwh_default",
+    dag_id="transactions_default_to_transactions_dwh_default",
     start_date=pendulum.datetime(2021, 1, 1, tz="UTC"),
     catchup=False,
     tags=['generated-dags'],
     schedule="@continuous",
 ) as dag:
 
-    with TaskGroup(group_id="extract") as extract:
+with TaskGroup(group_id="extract") as extract:
         from airflow.operators.python import PythonOperator
 
 
@@ -33,7 +33,7 @@ with DAG(
                 )
 
 
-    with TaskGroup(group_id="load") as load:
+with TaskGroup(group_id="load") as load:
         from airflow.operators.python import PythonOperator
 
 
