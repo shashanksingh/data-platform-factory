@@ -12,4 +12,4 @@ load_task = PythonOperator(
     dag=dag,
 )
 
-{{ dag_description.load.template }}
+{% include dag_description.load.template %}

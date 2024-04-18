@@ -1,0 +1,9 @@
+class RedshiftSQLOperator:
+    def __init__(self, task_id,sql):
+        pass
+
+
+RedshiftSQLOperator(
+                task_id="load_{self.database_name}_{self.table_name}",
+                sql="select 1"
+            )

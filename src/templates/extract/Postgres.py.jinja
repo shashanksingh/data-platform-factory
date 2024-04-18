@@ -1,0 +1,4 @@
+PostgresOperator(
+            task_id="extract_{self.database_name}_{self.table_name}",
+            sql="SELECT * from {self.database_name}.{self.table_name};",
+        )
