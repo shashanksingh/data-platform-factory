@@ -12,31 +12,46 @@ with DAG(
     tags={{ dag_description.dag.tags }},
     schedule="{{ dag_description.dag.schedule }}",
 ) as dag:
-    with TaskGroup(group_id="extract") as extract:
-    {% filter indent(width=8) %}
-       {% include 'extract/base.py.jinja' %}
-    {% endfilter %}
 
-    with TaskGroup(group_id="load") as load:
-    {% filter indent(width=8) %}
-       {% include 'load/base.py.jinja' %}
-     {% endfilter %}
+{% filter indent(width=4) -%}
+with TaskGroup(group_id="extract") as extract:
+{%- endfilter -%}
+
+{% filter indent(width=8) %}
+{% include 'extract/base.py.jinja' %}
+{% endfilter %}
+
+{% filter indent(width=4) -%}
+with TaskGroup(group_id="load") as load:
+{%- endfilter -%}
+{% filter indent(width=8) %}
+{% include 'load/base.py.jinja' %}
+{% endfilter %}
 
 {#    {% if 'wait' in dag_description and dag_description.get("wait") %}#}
 {#       {% include 'wait.py.jinja' %}#}
 {#    {% endif %}#}
 
     {% if 'report' in dag_description and dag_description.get("report") %}
-        with TaskGroup(group_id="report") as report:
-            {% include 'report.py.jinja' %}
-        load >> report
+with TaskGroup(group_id="report") as report:
+{% include 'report.py.jinja' %}
+load >> report
     {% endif %}
 
-    {% if 'transform' in dag_description and dag_description.get("transform") %}
-        with TaskGroup(group_id="transform") as transform:
-            {% include 'transform.py.jinja' %}
-        extract >> transform >> load
-    {% else %}
-        extract >> load
-    {% endif %}
+{% if 'transform' in dag_description and dag_description.get("transform") %}
+
+{% filter indent(width=8) %}
+with TaskGroup(group_id="transform") as transform:
+{% endfilter %}
+
+{% include 'transform.py.jinja' %}
+
+{% filter indent(width=8) %}
+extract >> transform >> load
+{% endfilter %}
+{% else %}
+{% filter indent(width=8) %}
+extract >> load
+{% endfilter %}
+{% endif %}
 

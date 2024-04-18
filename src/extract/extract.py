@@ -7,6 +7,7 @@ class Extract(BaseDAGFactoryModel):
     model_config = ConfigDict(extra="forbid")
     conn_id: str
 
+    # TODO : Lets document this template magic
     @computed_field(return_type=str)
     def template(self):
         return f"extract/{self.__class__.__name__}.py.jinja"
