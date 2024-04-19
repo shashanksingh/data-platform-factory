@@ -24,7 +24,11 @@ unittest-coverge:
 unittest-verbose:
 	python3 -m pytest test -p no:sugar -s -vv
 
+generate-dags:
+	 python3 -m src.generate_dags --directory definitions
 
+test-dags:
+	astro dev parse
 
 toml_sort:
 	toml-sort  definitions/**/*.toml  --all --in-place
@@ -52,4 +56,4 @@ generate-package-from-cli:
 
 lint: ruff  mypy flake8
 tests: unittest
-all: setup install lint tests
+all: setup install lint tests generate-dags test-dags
