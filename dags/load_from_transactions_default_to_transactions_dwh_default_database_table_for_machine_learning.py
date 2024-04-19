@@ -29,9 +29,11 @@ with DAG(
             dag=dag,
         )
 
+        from airflow.providers.postgres.operators.postgres import PostgresOperator
+
         PostgresOperator(
-                    task_id="extract_{self.database_name}_{self.table_name}",
-                    sql="SELECT * from {self.database_name}.{self.table_name};",
+                    task_id="extract_database_table",
+                    sql="SELECT * from database.table;",
                 )
 
 
@@ -51,8 +53,10 @@ with DAG(
             dag=dag,
         )
 
+        from airflow.providers.postgres.operators.postgres import PostgresOperator
+
         PostgresOperator(
-                        task_id="load_{self.database_name}_{self.table_name}",
+                        task_id="load_database_table",
                         sql="select 1"
                     )
 

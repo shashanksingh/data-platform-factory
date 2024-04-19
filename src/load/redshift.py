@@ -16,3 +16,7 @@ class Redshift(Load):
 
     def __str__(self):
         return f"{self.conn_id}_{self.database_name}_{self.table_name}"
+
+    @computed_field(return_type=str)
+    def task_id(self):
+        return f"load_{self.database_name}_{self.table_name}"

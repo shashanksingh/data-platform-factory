@@ -29,7 +29,7 @@ def generate_dags(directory: str) -> None:
         else:
             raise Exception("Project Name as subdirectory is needed")
         dag_name = dag_factory.generate_dag_name(dag_description)
-        with open(f"build/{dag_name}_for_{project_name}.py", mode="w") as file_context:
+        with open(f"dags/{dag_name}_for_{project_name}.py", mode="w") as file_context:
             file_context.write(output)
 
 

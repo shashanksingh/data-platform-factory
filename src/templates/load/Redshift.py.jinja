@@ -1,4 +1,6 @@
+from airflow.providers.postgres.operators.postgres import PostgresOperator
+
 PostgresOperator(
-                task_id="load_{self.database_name}_{self.table_name}",
+                task_id="{{ dag_description.load.task_id }}",
                 sql="select 1"
             )
