@@ -1,0 +1,6 @@
+from airflow.providers.postgres.operators.postgres import PostgresOperator
+
+PostgresOperator(
+            task_id="{{ dag_description.extract.task_id }}",
+            sql="SELECT * from {{  dag_description.extract.database_name}}.{{dag_description.extract.table_name}};",
+        )

@@ -1,4 +1,4 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, computed_field
 
 
 class Load(BaseModel):
@@ -7,3 +7,7 @@ class Load(BaseModel):
 
     def __str__(self):
         return self.conn_id
+
+    @computed_field(return_type=str)
+    def template(self):
+        return f"load/{self.__class__.__name__}.py.jinja"

@@ -14,18 +14,9 @@ class Redshift(Load):
     def s3_bucket(self) -> str:
         return "s3://data-platform-factory"  # TODO needs to be figured out
 
+    def __str__(self):
+        return f"{self.conn_id}_{self.database_name}_{self.table_name}"
+
     @computed_field(return_type=str)
-    def template(self):
-        return (
-            f"        RedshiftSQLOperator(\n"
-            f'            task_id="load_{self.database_name}_{self.table_name}",\n'
-            f'            sql="COPY sales\n'
-            f"            FROM {self.s3_bucket}\n"
-            f"            DELIMITER '\t' \n"
-            f"            TIMEFORMAT 'MM/DD/YYYY HH:MI:SS' \n"
-            f"            REGION 'us-east-1'\n"
-            f"            IAM_ROLE default; \n"
-            f'            ",\n'
-            f"        )\n"
-            f"    "
-        )
+    def task_id(self):
+        return f"load_{self.database_name}_{self.table_name}"

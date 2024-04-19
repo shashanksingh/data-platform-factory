@@ -9,7 +9,7 @@ table_name = "table"
 type = "postgres"
 
 [Load]
-conn_id = "transactions_dwh_default"
+conn_id = "reporting_dwh_default"
 database_name = "database"
-table_name = "table"
+table_name = "table_reporting"
 type = "redshift"
