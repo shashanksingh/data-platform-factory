@@ -10,19 +10,19 @@ install:
 	python3 -m pip install -r src/requirements.txt
 
 test-install:
-	python3 -m pip install -r test/requirements.test.txt
+	python3 -m pip install -r tests/requirements.test.txt
 
 dev-install:
 	python3 -m pip install -r src/requirements.dev.txt
 
 unittest:
-	python3 -m pytest test
+	python3 -m pytest tests
 
 unittest-coverge:
-	python3 -m pytest  test/ -p no:sugar
+	python3 -m pytest  tests/ -p no:sugar
 
 unittest-verbose:
-	python3 -m pytest test -p no:sugar -s -vv
+	python3 -m pytest tests -p no:sugar -s -vv
 
 generate-dags:
 	 python3 -m src.generate_dags --directory definitions
@@ -37,10 +37,10 @@ isort:
 	python3 -m  isort .
 
 ruff:
-	python3 -m ruff format src/ test/
+	python3 -m ruff format src/ tests/
 
 flake8:
-	python3 -m flake8 src/ test/
+	python3 -m flake8 src/ tests/
 
 pylint:
 	python3 -m pylint src/
