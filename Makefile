@@ -2,7 +2,7 @@
 
 setup:
 	python3 -m pip install --upgrade pip
-	brew install astro
+	brew install astro terraform terragrunt
 
 
 
